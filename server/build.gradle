@@ -1,0 +1,15 @@
+group 'com.kontakt1'
+version '1.0'
+
+dependencies {
+
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'Runner'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

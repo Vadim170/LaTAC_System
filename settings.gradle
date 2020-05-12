@@ -1,0 +1,5 @@
+rootProject.name = 'LaTAC_System'
+include 'core'
+include 'server'
+include 'androidApp'
+

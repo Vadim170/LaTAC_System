@@ -1,0 +1,6 @@
+group 'com.kontakt1'
+version '1.0'
+
+dependencies {
+
+}
