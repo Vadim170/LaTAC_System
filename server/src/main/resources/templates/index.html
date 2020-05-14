@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Силосы</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <b>Группы(Силосы):</b>
+    <th:block th:each="group : ${groups}">
+        <a th:href="@{'params?silo=' + ${group.name}}">
+            <div>
+                <b th:text="${group.dir}"></b>
+                <span  th:text="${group.name}"></span>
+            </div>
+        </a>
+    </th:block>
+    <b>Мнемосхемы:</b>
+    <th:block th:each="mnemoscheme : ${mnemoschems}">
+        <a th:href="@{'mnemoscheme?mnemoscheme=' + ${mnemoscheme.name}}">
+            <div>
+                <b th:text="${mnemoscheme.name}"></b>
+            </div>
+        </a>
+    </th:block>
+</body>
+</html>

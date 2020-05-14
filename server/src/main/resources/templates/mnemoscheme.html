@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Мнемосхема</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="/js/mnemoscheme.js"></script>
+</head>
+<body>
+    <div th:utext="${mnemo}"></div>
+    <script>websocketConnect();</script>
+</body>
+</html>

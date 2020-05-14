@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Показания уровня</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script th:inline="javascript">
+        function onBtnLoadChart() {
+            var paramId = [[${paramId}]];
+            var paramType = [[${paramType}]];
+            var datetimefrom = document.loadform.datetimefrom.value;
+            var datetimeto = document.loadform.datetimeto.value;
+            console.log(datetimefrom);
+            console.log(datetimeto);
+            loadChart(paramType, paramId, datetimefrom, datetimeto);
+        }
+    </script>
+    <script src="/js/levelchartcreator.js"></script>
+</head>
+<body>
+    <p>Параметр: <span th:text="${paramName}"></span></p>
+    <form name="loadform">
+        <p>
+            <label for="datetimefrom">Дата и время от: </label>
+            <input type="datetime-local" id="datetimefrom" name="date"/>
+        </p>
+        <p>
+            <label for="datetimeto">Дата и время до: </label>
+            <input type="datetime-local" id="datetimeto" name="date"/>
+        </p>
+        <p>
+            <input type="button" value="Загрузить" onclick="onBtnLoadChart();">
+        </p>
+    </form>
+    <div id="container"></div>
+    <script>
+        setTimeBoundsAndStartBackgroundUpdater()
+    </script>
+</body>
+</html>

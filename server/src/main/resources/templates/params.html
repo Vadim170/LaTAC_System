@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Силос <span th:text="${siloName}"></span></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <p>Силос: <span th:text="${siloName}"></span></p>
+    <p>Количество параметров: <span th:text="${completeParams.size()}"></span></p>
+    <table>
+        <tr>
+            <th>Уровень</th>
+            <th>Температура</th>
+            <th>Д. верх</th>
+            <th>Д. нижн</th>
+        </tr>
+        <tr th:each="completeParam : ${completeParams}">
+            <td>
+                <th:block th:if="completeParam.lParam != null">
+                    <a th:href="@{'indications?paramType=Level&amp;paramId=' + ${completeParam.lParam.id}}"
+                       th:text="${completeParam.lParam.alias}"/>
+                </th:block>
+            </td>
+            <td>
+                <th:block th:if="completeParam.tParam != null">
+                    <a th:href="@{'indications?paramType=Temperature&amp;paramId=' + ${completeParam.tParam.id}}"
+                       th:text="${completeParam.tParam.alias}"/>
+                </th:block>
+            </td>
+            <td>
+                <th:block th:if="${completeParam.ldUpParam != null}">
+                    <a th:href="@{'indications?paramType=LevelDiscreteUp&amp;paramId=' + ${completeParam.ldUpParam.id}}"
+                       th:text="${completeParam.ldUpParam.alias}"/>
+                </th:block>
+            </td>
+            <td>
+                <th:block th:if="${completeParam.ldDownParam != null}">
+                    <a th:href="@{'indications?paramType=LevelDiscreteDown&amp;paramId=' + ${completeParam.ldDownParam.id}}"
+                       th:text="${completeParam.ldDownParam.alias}"/>
+                </th:block>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
