@@ -1,6 +1,8 @@
 # Project exclude paths
 /.gradle/
 /core/build/
+/server/build/
+/androidApp/build/
 # From Apdroid project
 *.iml
 .gradle
