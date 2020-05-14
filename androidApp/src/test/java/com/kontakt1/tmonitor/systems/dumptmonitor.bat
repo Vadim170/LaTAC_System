@@ -1,0 +1,1 @@
+mysqldump.exe -hlocalhost -uroot -R --add-drop-database --add-drop-table --skip-comments -B tmonitor>tmonitor_dump.sql

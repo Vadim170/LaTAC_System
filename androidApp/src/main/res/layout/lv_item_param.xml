@@ -1,0 +1,137 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+    <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/black"
+            android:text="@string/param_description" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+        <LinearLayout
+                android:id="@+id/tvLParamLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+            <TextView
+                    android:id="@+id/tvLParamName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_list_param_name"
+                    android:textColor="@android:color/black"
+                    tools:ignore="DuplicateIds" />
+
+            <ImageView
+                    android:id="@+id/ivLParamIcon"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:contentDescription="@string/level" />
+
+            <TextView
+                    android:id="@+id/tvLParamConstraints"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_list_param_name"
+                    android:textColor="@android:color/secondary_text_light"
+                    tools:text="@string/tv_list_param_name" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/tvLDDownParamLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+            <TextView
+                    android:id="@+id/tvLDDownParamName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_list_param_name"
+                    android:textColor="@android:color/black"
+                    tools:ignore="DuplicateIds" />
+
+            <ImageView
+                    android:id="@+id/ivLDDownParamIcon"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:contentDescription="@string/level" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/tvLDUpParamLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+            <TextView
+                    android:id="@+id/tvLDUpParamName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_list_param_name"
+                    android:textColor="@android:color/black"
+                    tools:ignore="DuplicateIds" />
+
+            <ImageView
+                    android:id="@+id/ivLDUpParamIcon"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:contentDescription="@string/level" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/tvTParamLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+            <TextView
+                    android:id="@+id/tvTParamName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_list_param_name"
+                    android:textColor="@android:color/black" />
+
+            <ImageView
+                    android:id="@+id/ivTParamIcon"
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:contentDescription="@string/temperature" />
+
+            <TextView
+                    android:id="@+id/tvTParamConstraints"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_list_param_name"
+                    android:textColor="@android:color/secondary_text_light" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

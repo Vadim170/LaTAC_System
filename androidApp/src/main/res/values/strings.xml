@@ -1,0 +1,40 @@
+<resources>
+    <string name="company">Компания: ООО \"КОНТАКТ-1\"</string>
+    <string name="tvDeveloper">Разработчик: Макаров Вадим</string>
+    <string name="app_name">АСКТ-01 Монитор оператора</string>
+    <string name="version">beta v 0.2.0</string>
+    <string name="copyright">© В. Г. Макаров, 2019–2020</string>
+    
+    <string name="btn_settings">Настройки</string>
+    <string name="btn_connect">Подключиться</string>
+    <string name="btn_about">О программе</string>
+
+    <string name="tv_address_separator">:</string>
+    <string name="tv_address">Адрес сервера</string>
+    <string name="tv_database_name">Название бд</string>
+    <string name="tv_login">Логин</string>
+    <string name="tv_password">Пароль</string>
+    <string name="tv_port">Порт</string>
+
+    <string name="title_silo">Силос</string>
+    <string name="tv_list_param_name">Название</string>
+    <string name="tv_from">От</string>
+    <string name="tv_to">до</string>
+    <string name="cb_autofill_text">Запомнить и повательный список интерваловдключаться автоматически при включении приложения (Небезопасно)</string>
+    <string name="cb_service_enabled_text">Обновлять данные в фоне и предупреждать о аварийных ситуациях</string>
+    <string name="cb_time_by_server_time_zone">Отображать время по часовому поясу сервера</string>
+    <string name="cbConnectByRest">Подключаться посредством веб сервера</string>
+    <string name="level">Уровень</string>
+    <string name="btnDateFrom">Дата(от)</string>
+    <string name="btnDateTo">Дата(до)</string>
+    <string name="temperature">Температура</string>
+    <string name="title_param">Параметр</string>
+    <string name="site_address">http://www.kontakt-1.ru/</string>
+    <string name="btnToDiagram">Диаграмма</string>
+    <string name="btnToChart">Графики</string>
+    <string name="tvActualTask">Текущая задача</string>
+    <string name="last_update">Последнее обновление</string>
+    <string name="cb_database_name_by_dafault">Название по умолчанию</string>
+    <string name="tv_selected_system">Выбранная система</string>
+    <string name="param_description">Description</string>
+</resources>

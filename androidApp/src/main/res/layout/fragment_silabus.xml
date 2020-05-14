@@ -1,0 +1,45 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:id="@+id/fl_home"
+             tools:context=".ui.activities.mainActivityFragments.SilabusFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+                                                 android:layout_height="match_parent">
+
+        <ProgressBar
+                android:id="@+id/pbConnect"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="50dp"
+                android:layout_height="49dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/gvSilosMap"
+                app:layout_constraintEnd_toEndOf="@+id/gvSilosMap"
+                app:layout_constraintStart_toStartOf="@+id/gvSilosMap"
+                app:layout_constraintTop_toTopOf="@+id/gvSilosMap" />
+
+        <TextView
+                android:id="@+id/tvActualTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tvActualTask"
+                app:layout_constraintBottom_toTopOf="@+id/pbConnect"
+                app:layout_constraintEnd_toEndOf="@+id/pbConnect"
+                app:layout_constraintStart_toStartOf="@+id/pbConnect" />
+
+        <GridView
+                android:id="@+id/gvSilosMap"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:numColumns="auto_fit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" >
+
+        </GridView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

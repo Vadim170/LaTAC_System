@@ -1,0 +1,1 @@
+mysql.exe -hlocalhost -uroot tmonitor<tmonitor_init.sql
