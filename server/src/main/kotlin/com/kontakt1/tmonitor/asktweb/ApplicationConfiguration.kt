@@ -15,13 +15,20 @@ class ApplicationConfiguration {
     @Bean
     fun system() = Askt01()
 
-    @Bean
-    @Primary
-    fun dataSource(): DataSource {
-        return DataSourceBuilder.create()
-                .username("root")
-                .password("")
-                .url("jdbc:mysql://127.0.0.1:3306/tmonitor_test?useLegacyDatetimeCode=false")
-                .build()
-    }
+    /**
+     * Настройка конфигурации подключения к бд перенесена в файл конфигурации,
+     * аддресс которого передается спрингу через параметр запуска
+     */
+//    @Bean
+//    @Primary
+//    fun dataSource(): DataSource {
+//        return DataSourceBuilder.create()
+//                .username("root")
+//                .password("")
+//                .url("jdbc:mysql://127.0.0.1:3306/tmonitor_test?useLegacyDatetimeCode=false")
+//                .build()
+//    }
+//spring.datasource.url=jdbc:mysql://127.0.0.1:3306/tmonitor_test?useLegacyDatetimeCode=false
+//spring.datasource.username=root
+//spring.datasource.password=
 }

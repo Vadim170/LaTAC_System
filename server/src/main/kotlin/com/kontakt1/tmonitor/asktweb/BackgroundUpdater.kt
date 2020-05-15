@@ -36,7 +36,7 @@ class BackgroundUpdater {
         GlobalScope.launch {
             while (serviceIsRunning && system.silabus.listSilo.isNotEmpty()) {
                 val connection = dataSource.connection
-                val isNeedNotification = connection.let { system.silabus.readAllStates(it) } ?: false
+                val isNeedNotification = connection.let { system.silabus.readAllStates(it) }
                 onPostExecuteReadAllStates(isNeedNotification)
                 delay(300_000) // Каждые 5 минут
             }
@@ -46,9 +46,9 @@ class BackgroundUpdater {
     private fun launchWebsocketRandomizer() {
         GlobalScope.launch {
             while (serviceIsRunning) {
-                val groupId = "0"
+                //val groupId = "0"
                 val paramType = "level"
-                val rezId = "1"
+                //val rezId = "1"
                 val indication = getRandLevelIndication()
                 val listOfUpdates = listOf<String>(
                         getJsonIndicatorUpdate(paramType, 0, indication = indication),

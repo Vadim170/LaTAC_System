@@ -24,7 +24,7 @@ abstract class AnalogParams<T : AnalogIndication?>(
     override suspend fun updateState(resultset: ResultSet?) {
         try {
             if (resultset != null) {
-                resultset.beforeFirst()
+                //resultset.beforeFirst()
                 while (resultset.next()) {
                     if(resultset.getInt("prm_id") == id) {
                         val constraintId = resultset.getInt("cnstr_id")

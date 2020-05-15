@@ -1,7 +1,7 @@
 plugins {
     id("org.springframework.boot") version "2.2.7.RELEASE" // needs for spring
     id("io.spring.dependency-management")  version "1.0.9.RELEASE" // needs for spring
-    id("org.jetbrains.kotlin.plugin.spring") version "1.3.71" // needs for spring on kotlin
+    id("org.jetbrains.kotlin.plugin.spring") version "1.3.72" // needs for spring on kotlin
 //    id("org.jetbrains.kotlin.plugin.jpa") version "1.3.71"
 }
 

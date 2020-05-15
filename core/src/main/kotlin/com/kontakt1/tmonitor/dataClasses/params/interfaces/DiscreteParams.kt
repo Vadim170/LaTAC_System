@@ -37,7 +37,7 @@ abstract class DiscreteParams(
 	suspend fun updateIndications(resultSetLastIndications: ResultSet?): DiscreteIndication? {
 		try {
 			if (resultSetLastIndications != null) {
-				resultSetLastIndications.beforeFirst()
+				//resultSetLastIndications.beforeFirst()
 				while (resultSetLastIndications.next()) {
 					if (resultSetLastIndications.getInt("prm_id") == id) {
 						val serverTime = Calendar.getInstance()

@@ -48,7 +48,8 @@ abstract class System {
      */
     suspend fun readStruct(connection: Connection, numberAttempts: Int = 5) {
         TimeCorrector.readTimeCorrection(connection)
-        val loadedMnemoschems = readMnemoschems(connection)
+        // TODO Мнемосхемы пока отключены
+        val loadedMnemoschems = emptyList<Mnemoscheme>() // readMnemoschems(connection)
         mnemoschems.clear()
         mnemoschems.addAll(loadedMnemoschems)
         val silos = readSystemStruct(connection, numberAttempts)
