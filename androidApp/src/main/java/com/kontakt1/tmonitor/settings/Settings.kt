@@ -8,7 +8,7 @@ data class Settings(
     // Параметр хранящий адресс для хранения настроек
     // Задаю через setSharedPreferences в конструкторе MainActivity
     var selectedSystem: String = "АСКТ-01", // Выбранная система
-    var useRestServer: Boolean = true,
+    var useRestServer: Boolean = false,
     var isServiceEnabled: Boolean = false, // По умолчанию сервис отключен
     var isAutofillOn: Boolean = false, // По умолчанию выключено, так как это небезопасно
     var isDisplayTimeByServerTimeZone: Boolean = false, // По умолчанию используем время на устройстве клиента
