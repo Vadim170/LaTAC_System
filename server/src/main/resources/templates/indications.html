@@ -3,6 +3,7 @@
 <head>
     <title>Показания уровня</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -20,21 +21,25 @@
     <script src="/js/levelchartcreator.js"></script>
 </head>
 <body>
-    <p>Параметр: <span th:text="${paramName}"></span></p>
-    <form name="loadform">
-        <p>
-            <label for="datetimefrom">Дата и время от: </label>
-            <input type="datetime-local" id="datetimefrom" name="date"/>
-        </p>
-        <p>
-            <label for="datetimeto">Дата и время до: </label>
-            <input type="datetime-local" id="datetimeto" name="date"/>
-        </p>
-        <p>
-            <input type="button" value="Загрузить" onclick="onBtnLoadChart();">
-        </p>
-    </form>
-    <div id="container"></div>
+    <div class="container theme-showcase" role="main">
+        <div class="page-header">
+            <h1>Параметр: <span th:text="${paramName}"></span></h1>
+        </div>
+        <form name="loadform">
+            <p>
+                <label for="datetimefrom">Дата и время от: </label>
+                <input type="datetime-local" id="datetimefrom" name="date"/>
+            </p>
+            <p>
+                <label for="datetimeto">Дата и время до: </label>
+                <input type="datetime-local" id="datetimeto" name="date"/>
+            </p>
+            <p>
+                <button type="button" class="btn btn-success" onclick="onBtnLoadChart();">Загрузить</button>
+            </p>
+        </form>
+        <div id="container"></div>
+    </div>
     <script>
         setTimeBoundsAndStartBackgroundUpdater()
     </script>
