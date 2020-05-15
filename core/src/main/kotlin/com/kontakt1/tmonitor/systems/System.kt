@@ -169,7 +169,7 @@ abstract class System {
     abstract suspend fun readLastTempIndications(
         connection: Connection,
         selectedParam: TParam
-    ): List<Indication>
+    ): List<TIndication>
 
     protected abstract suspend fun readSystemStruct(connection: Connection, numberAttempts: Int = 5): List<Silo>
 
@@ -196,6 +196,18 @@ abstract class System {
         }
     }
 
+    fun getJSONSeriesOfDiagram(connection: Connection, param: Param<*>): String {
+        return runBlocking {
+            when (param) {
+                is TParam -> {
+                    val listIndications = readLastTempIndications(connection, param)
+                    "[{ \"name\": \"Параметр ${param.alias}\", \"data\": ${listIndications.getOrNull(0)?.temp?.toList()} }]"
+                }
+                else -> ""
+            }
+        }
+    }
+
     fun clear() {
         silabus.listSilo.clear()
         selectedSilo = null
@@ -207,6 +219,7 @@ abstract class System {
     }
 
     abstract fun readMnemoschems(connection: Connection): List<Mnemoscheme>
+
 
     interface EventReadSilosUIListener {
         fun onUpdate()

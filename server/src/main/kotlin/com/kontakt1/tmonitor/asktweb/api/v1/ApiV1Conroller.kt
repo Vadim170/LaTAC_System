@@ -49,4 +49,18 @@ class ApiV1Conroller {
         }
         return ""
     }
+
+    @GetMapping(value = ["/indicationsLast"], produces = ["application/json"])
+    fun getChartIndicationsLast(
+            @RequestParam(value = "paramType", required = true, defaultValue = "") paramType: String,
+            @RequestParam(value = "paramId", required = true) paramId: Int?
+    ): String {
+        val param = system.silabus.getParam(paramId, paramType)
+        if (param != null) {
+            val connection = dataSource.connection
+            val series = system.getJSONSeriesOfDiagram(connection, param)
+            return "{ \"name\": \"${param.alias}\",\"title\": \"Параметр ${param.alias}\", \"series\": $series}"
+        }
+        return ""
+    }
 }

@@ -13,9 +13,9 @@
             var paramType = [[${paramType}]];
             var datetimefrom = document.loadform.datetimefrom.value;
             var datetimeto = document.loadform.datetimeto.value;
-            console.log(datetimefrom);
-            console.log(datetimeto);
-            loadChart(paramType, paramId, datetimefrom, datetimeto);
+            //console.log(datetimefrom);
+            //console.log(datetimeto);
+            chartAndDiagramUpdate(paramType, paramId, datetimefrom, datetimeto);
         }
     </script>
     <script src="/js/levelchartcreator.js"></script>
@@ -39,6 +39,7 @@
             </p>
         </form>
         <div id="container"></div>
+        <div id="containerDiagram"></div>
     </div>
     <script>
         setTimeBoundsAndStartBackgroundUpdater()

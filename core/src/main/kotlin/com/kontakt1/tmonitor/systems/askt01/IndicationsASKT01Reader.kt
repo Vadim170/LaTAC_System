@@ -61,10 +61,10 @@ class IndicationsASKT01Reader {
         }
 
         suspend fun readLastTempIndications(connection: Connection,
-                                            selectedParam: TParam): List<Indication> {
-            if(connection.isClosed) return listOf<Indication>()
+                                            selectedParam: TParam): List<TIndication> {
+            if(connection.isClosed) return listOf<TIndication>()
             val stmt =  connection.createStatement()
-            return  loadTIndications(stmt, selectedParam)
+            return loadTIndications(stmt, selectedParam) as List<TIndication>
         }
 
         /**
