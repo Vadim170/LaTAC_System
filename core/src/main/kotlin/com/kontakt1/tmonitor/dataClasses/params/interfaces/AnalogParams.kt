@@ -21,25 +21,23 @@ abstract class AnalogParams<T : AnalogIndication?>(
     /**
      * Обновление последнего показания.
      */
-    override suspend fun updateState(resultset: ResultSet?) {
+    override suspend fun updateState(resultSet: ResultSet) {
         try {
-            if (resultset != null) {
-                //resultset.beforeFirst()
-                while (resultset.next()) {
-                    if(resultset.getInt("prm_id") == id) {
-                        val constraintId = resultset.getInt("cnstr_id")
-                        val constraintState = resultset.getInt("cnstr_state")
-                        val saveTime = resultset.getTimestamp("cnstr_last_savetime")
-                        saveTime ?: continue
-                        val serverTime = Calendar.getInstance()
-                        serverTime.timeInMillis = saveTime.time
-                        //val serverTime = calculateSavetimeCalendar(saveTime)
-                        val cnstr = constraintsList.find { it.constraint.id == constraintId }
-                        if (isRelevantIndiacation(serverTime)) { // Показания есть и они актуальны
-                            cnstr?.state = State.getByInt(constraintState)
-                        } else {
-                            cnstr?.state = State.OLD
-                        }
+            //resultset.beforeFirst()
+            while (resultSet.next()) {
+                if(resultSet.getInt("prm_id") == id) {
+                    val constraintId = resultSet.getInt("cnstr_id")
+                    val constraintState = resultSet.getInt("cnstr_state")
+                    val saveTime = resultSet.getTimestamp("cnstr_last_savetime")
+                    saveTime ?: continue
+                    val serverTime = Calendar.getInstance()
+                    serverTime.timeInMillis = saveTime.time
+                    //val serverTime = calculateSavetimeCalendar(saveTime)
+                    val cnstr = constraintsList.find { it.constraint.id == constraintId }
+                    if (isRelevantIndiacation(serverTime)) { // Показания есть и они актуальны
+                        cnstr?.state = State.getByInt(constraintState)
+                    } else {
+                        cnstr?.state = State.OLD
                     }
                 }
             }

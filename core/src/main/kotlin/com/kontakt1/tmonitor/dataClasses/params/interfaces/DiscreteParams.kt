@@ -19,8 +19,8 @@ abstract class DiscreteParams(
 	override val numberMinutesRelevant = NUMBER_MINUTES_RELEVANT
 	protected abstract val nameColumnStateInDB: String
 
-	override suspend fun updateState(resultsetLastIndications: ResultSet?) {
-		val lastIndication = updateIndications(resultsetLastIndications)
+	override suspend fun updateState(resultSet: ResultSet) {
+		val lastIndication = updateIndications(resultSet)
 		lastIndication?.let { indication ->
 			val lastState = state
 			state = when {
@@ -34,21 +34,19 @@ abstract class DiscreteParams(
 		}
 	}
 
-	suspend fun updateIndications(resultSetLastIndications: ResultSet?): DiscreteIndication? {
+	suspend fun updateIndications(resultSetLastIndications: ResultSet): DiscreteIndication? {
 		try {
-			if (resultSetLastIndications != null) {
-				//resultSetLastIndications.beforeFirst()
-				while (resultSetLastIndications.next()) {
-					if (resultSetLastIndications.getInt("prm_id") == id) {
-						val serverTime = Calendar.getInstance()
-						serverTime.timeInMillis = resultSetLastIndications.getTimestamp("savetime").time
-						//val serverTime =
-						//	calculateSavetimeCalendar(resultSetLastIndications.getTimestamp("savetime"))
-						return DiscreteIndication(
-								serverTime,
-								Companion.getByInt(resultSetLastIndications.getInt(nameColumnStateInDB))
-							)
-					}
+			//resultSetLastIndications.beforeFirst()
+			while (resultSetLastIndications.next()) {
+				if (resultSetLastIndications.getInt("prm_id") == id) {
+					val serverTime = Calendar.getInstance()
+					serverTime.timeInMillis = resultSetLastIndications.getTimestamp("savetime").time
+					//val serverTime =
+					//	calculateSavetimeCalendar(resultSetLastIndications.getTimestamp("savetime"))
+					return DiscreteIndication(
+							serverTime,
+							Companion.getByInt(resultSetLastIndications.getInt(nameColumnStateInDB))
+						)
 				}
 			}
 		} catch (e: SQLException) {

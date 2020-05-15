@@ -17,7 +17,7 @@ abstract class Param<T : Indication?>(
 ) {
     var state: State = State.OK
     var isNeedNotification = false
-    abstract suspend fun updateState(resultSet: ResultSet?)
+    abstract suspend fun updateState(resultSet: ResultSet)
     protected abstract val numberMinutesRelevant: Long
 
     fun isRelevantIndiacation(timeLastIndication : Calendar): Boolean {

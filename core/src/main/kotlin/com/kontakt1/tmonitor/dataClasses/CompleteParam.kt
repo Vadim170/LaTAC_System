@@ -36,10 +36,10 @@ class CompleteParam(
 		resultsetLDUpConstraints: ResultSet?,
 		resultsetLDDownConstraints: ResultSet?
 	) {
-        lParam?.updateState(resultsetLConstraints)
-        tParam?.updateState(resultsetTConstraints)
-        ldUpParam?.updateState(resultsetLDUpConstraints)
-        ldDownParam?.updateState(resultsetLDDownConstraints)
+        resultsetLConstraints?.let { lParam?.updateState(it) }
+        resultsetTConstraints?.let { tParam?.updateState(it) }
+        resultsetLDUpConstraints?.let { ldUpParam?.updateState(it) }
+        resultsetLDDownConstraints?.let { ldDownParam?.updateState(it) }
         refreshState()
     }
 

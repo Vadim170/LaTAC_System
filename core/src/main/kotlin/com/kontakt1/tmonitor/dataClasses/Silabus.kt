@@ -59,14 +59,12 @@ class Silabus {
 	
 	private fun getResultSetLConstraintsStates(connection: Connection): ResultSet? {
         val stmt = connection.createStatement()
-        val result = stmt?.executeQuery("SELECT prm_id, cnstr_id, cnstr_state, cnstr_last_savetime FROM lcnstr")
-        return result
+        return stmt?.executeQuery("SELECT prm_id, cnstr_id, cnstr_state, cnstr_last_savetime FROM lcnstr")
     }
 	
     private fun getResultSetTConstraintsStates(connection: Connection): ResultSet? {
         val stmt = connection.createStatement()
-        val result = stmt?.executeQuery("SELECT prm_id, cnstr_id, cnstr_state, cnstr_last_savetime FROM tcnstr")
-        return result
+        return stmt?.executeQuery("SELECT prm_id, cnstr_id, cnstr_state, cnstr_last_savetime FROM tcnstr")
     }
 	
 	private fun getResultSetLDUpConstraintsStates(connection: Connection, ldupParams: List<LDUpParam>): ResultSet? {
@@ -78,8 +76,7 @@ class Silabus {
 			request.append("(SELECT '${ldUpParam.id}' as prm_id, savetime, ld_up FROM ldup${ldUpParam.name} ORDER BY savetime DESC LIMIT 1) ")
 		}
 		request.append(") as lastIndications")
-        val result = stmt?.executeQuery(request.toString())
-        return result
+        return stmt?.executeQuery(request.toString())
 	}
 	
 	private fun getResultSetDDownConstraintsStates(connection: Connection, lddownParams: List<LDDownParam>): ResultSet? {
@@ -91,8 +88,7 @@ class Silabus {
 			request.append("(SELECT '${ldDownParam.id}' as prm_id, savetime, ld_down FROM lddown${ldDownParam.name} ORDER BY savetime DESC LIMIT 1) ")
 		}
 		request.append(") as lastIndications")
-        val result = stmt?.executeQuery(request.toString())
-        return result
+        return stmt?.executeQuery(request.toString())
 	}
     
     fun resetState() {
