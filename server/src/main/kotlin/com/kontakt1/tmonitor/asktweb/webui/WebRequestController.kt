@@ -23,7 +23,6 @@ class WebRequestController {
     @GetMapping
     fun index(model: MutableMap<String, Any>) : String {
         model["groups"] = system.silabus.listSilo
-        model["silos"] = system.silabus.listSilo
         model["mnemoschems"] = system.mnemoschems
         return "index"
     }

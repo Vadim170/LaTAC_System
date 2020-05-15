@@ -8,7 +8,9 @@
     <b>Группы(Силосы):</b>
     <th:block th:each="group : ${groups}">
         <a th:href="@{'params?silo=' + ${group.name}}">
-            <div>
+            <div th:style="${group.state.value == 1} ?
+                            'background: #CEFFAD' : (${group.state.value == 0} ?
+                                'background: #FF7A7A' : 'background: #9C9C9C')">
                 <b th:text="${group.dir}"></b>
                 <span  th:text="${group.name}"></span>
             </div>
