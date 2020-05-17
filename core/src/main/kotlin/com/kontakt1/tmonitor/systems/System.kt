@@ -103,7 +103,6 @@ abstract class System {
                     "&paramId=${selectedParam.id}" +
                     "&datetimefrom=${dateTimeFrom.myRestDateTimeFormat()}" +
                     "&datetimeto=${dateTimeTo.myRestDateTimeFormat()}").readText()
-            println(str.toString())
             val chartData = Gson().fromJson(str, ChartData::class.java)
             val res = when(selectedParam) {
                 is LParam -> {

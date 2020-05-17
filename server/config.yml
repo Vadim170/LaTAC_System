@@ -9,3 +9,5 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/tmonitor_test?useLegacyDatetimeCode=false
     username: root
     password: 
+logging.level.org.springframework.web: DEBUG
+logging.level.org.hibernate: ERROR

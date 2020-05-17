@@ -25,7 +25,6 @@ class ApplicationController {
             val connection = dataSource.connection
             system.readStruct(connection)
             connection.close()
-            println("PostConstruct: Is closed: ${connection.isClosed}")
         }
         backgroundUpdater.launchBackgroundRefresh()
     }

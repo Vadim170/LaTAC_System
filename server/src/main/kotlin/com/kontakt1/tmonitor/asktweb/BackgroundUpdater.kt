@@ -36,12 +36,9 @@ class BackgroundUpdater {
         GlobalScope.launch {
             while (serviceIsRunning && system.silabus.listSilo.isNotEmpty()) {
                 val connection = dataSource.connection
-                println("Is closed: ${connection.isClosed}; Is not empty: ${system.silabus.listSilo.isNotEmpty()}")
                 val isNeedNotification = connection.let { system.silabus.readAllStates(it) }
                 onPostExecuteReadAllStates(isNeedNotification)
                 connection.close()
-                println("API: Is closed: ${connection.isClosed}")
-                system.silabus.listSilo.forEach { println("${it.name} - ${it.state}") }
                 delay(5_000) // 300_000) // Каждые 5 минут
             }
         }
