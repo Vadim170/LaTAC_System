@@ -21,7 +21,7 @@
                 </tr>
                 <tr th:each="completeParam : ${completeParams}">
                     <td>
-                        <th:block th:if="completeParam.lParam != null">
+                        <th:block th:if="${completeParam.lParam != null}">
                             <div th:style="${completeParam.lParam.state.value == 1} ?
                                 'background: #CEFFAD' : (${completeParam.lParam.state.value == 0} ?
                                     'background: #FF7A7A' : 'background: #9C9C9C')" >
@@ -31,7 +31,7 @@
                         </th:block>
                     </td>
                     <td>
-                        <th:block th:if="completeParam.tParam != null">
+                        <th:block th:if="${completeParam.tParam != null}">
                             <div th:style="${completeParam.tParam.state.value == 1} ?
                                 'background: #CEFFAD' : (${completeParam.tParam.state.value == 0} ?
                                     'background: #FF7A7A' : 'background: #9C9C9C')" >

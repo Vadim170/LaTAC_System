@@ -120,7 +120,7 @@ function loadDiagram(paramType, paramId) {
 				text: data.title
 			},
 			xAxis: {
-				min: 1,
+				min: 0,
 				title: {
 					text: null
 				}
@@ -128,7 +128,7 @@ function loadDiagram(paramType, paramId) {
 			yAxis: {
 				min: 0,
 				title: {
-					text: 'Population (millions)',
+					text: 'Temperature (°C)',
 					align: 'high'
 				},
 				labels: {
@@ -143,6 +143,7 @@ function loadDiagram(paramType, paramId) {
 				}
 			},
 			legend: {
+                enabled: false,
 				layout: 'vertical',
 				align: 'right',
 				verticalAlign: 'top',

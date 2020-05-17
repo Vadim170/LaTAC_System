@@ -52,10 +52,10 @@ class WebRequestController {
             @RequestParam(value = "paramId", required = true) paramId: Int?,
             model: MutableMap<String, Any>
     ) : String {
-        val param = paramId?.let { system.silabus.findLParamById(it) }
+        val param = paramId?.let { system.silabus.getParam(it, paramType) }
         model["paramType"] = paramType
         model["paramName"] = param?.name ?: "Параметр не найден"
-        model["paramId"] = param?.id ?: "null"
+        model["paramId"] = paramId ?: "null"
         return "indications"
     }
 }
