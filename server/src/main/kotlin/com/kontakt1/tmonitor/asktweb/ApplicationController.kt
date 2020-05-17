@@ -22,7 +22,10 @@ class ApplicationController {
     @PostConstruct
     fun postConstruct() {
         runBlocking {
-            system.readStruct(dataSource.connection)
+            val connection = dataSource.connection
+            system.readStruct(connection)
+            connection.close()
+            println("PostConstruct: Is closed: ${connection.isClosed}")
         }
         backgroundUpdater.launchBackgroundRefresh()
     }

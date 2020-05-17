@@ -56,9 +56,6 @@ class WebRequestController {
         model["paramType"] = paramType
         model["paramName"] = param?.name ?: "Параметр не найден"
         model["paramId"] = param?.id ?: "null"
-        GlobalScope.launch {
-            dataSource.connection.let { system.readStruct(it) }
-        }
         return "indications"
     }
 }

@@ -7,11 +7,17 @@ object TimeCorrector {
     private var timeCorrection: Long = 0L
 
     fun readTimeCorrection(connection: Connection) {
-        val stmt = connection.createStatement() ?: return
-        val timestamp = Timestamp(0)
-        val resultset = stmt.executeQuery("SELECT '$timestamp' AS TIME;")
-        resultset.next()
-        timeCorrection = resultset.getTimestamp("TIME").time - timestamp.time
+        try {
+            val stmt = connection.createStatement() ?: return
+            val timestamp = Timestamp(0)
+            val resultset = stmt.executeQuery("SELECT '$timestamp' AS TIME;")
+            resultset.next()
+            timeCorrection = resultset.getTimestamp("TIME").time - timestamp.time
+            resultset.close()
+            stmt.close()
+        } finally {
+
+        }
     }
 
     /**

@@ -6,10 +6,18 @@ Date.prototype.setDefaultDate = (function() {
 function setDateTimeToAndFromLastDay() {
     var dateFrom = new Date();
     dateFrom.setDate(dateFrom.getDate()-1);
-    $("#datetimefrom").val(dateFrom.setDefaultDate());
-    $("#datetimeto").val(new Date().setDefaultDate());
-    $("#datetimefrom")[0].valueAsNumber = dateFrom.getTime();
-    $('#datetimeto')[0].valueAsNumber = new Date().getTime();
+    try {
+        $("#datetimefrom").val(dateFrom.setDefaultDate());
+        $("#datetimeto").val(new Date().setDefaultDate());
+    } catch(e) {
+        console.log('Ошибка ' + e.name + ":" + e.message + "\n" + e.stack); // (3) <--
+    }
+    try {
+        $("#datetimefrom")[0].valueAsNumber = dateFrom.getTime();
+        $('#datetimeto')[0].valueAsNumber = new Date().getTime();
+    } catch(e) {
+        console.log('Ошибка ' + e.name + ":" + e.message + "\n" + e.stack); // (3) <--
+    }
 }
 
 function setTimeBoundsAndStartBackgroundUpdater() {

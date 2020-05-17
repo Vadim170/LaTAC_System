@@ -45,6 +45,8 @@ class ApiV1Conroller {
         if (param != null) {
             val connection = dataSource.connection
             val series = system.getJSONListSeriesOfCharts(connection, dateTimeFrom, dateTimeTo, param)
+            connection.close()
+            println("API: Is closed: ${connection.isClosed}")
             return "{ \"name\": \"${param.alias}\",\"title\": \"Параметр ${param.alias}\", \"series\": $series}"
         }
         return ""
@@ -59,6 +61,8 @@ class ApiV1Conroller {
         if (param != null) {
             val connection = dataSource.connection
             val series = system.getJSONSeriesOfDiagram(connection, param)
+            connection.close()
+            println("API: Is closed: ${connection.isClosed}")
             return "{ \"name\": \"${param.alias}\",\"title\": \"Параметр ${param.alias}\", \"series\": $series}"
         }
         return ""
