@@ -109,6 +109,10 @@ function loadChart(paramType, paramId, datetimefrom, datetimeto) {
 function loadDiagram(paramType, paramId) {
 	$.get("api/v1/indicationsLast?paramType=" + paramType + "&paramId=" + paramId, function(data) {
 	    if(paramType !== "Temperature") return;
+	    let reversedDataSeries = data.series
+        reversedDataSeries[0].data = reversedDataSeries[0].data.reverse();
+        let size = reversedDataSeries[0].data.length
+        let lables = Array.from({ length: size }, (v, i) =>  size - i);
 		let chart = {
 			chart: {
 				type: 'bar'
@@ -121,6 +125,7 @@ function loadDiagram(paramType, paramId) {
 			},
 			xAxis: {
 				min: 0,
+                categories: lables,
 				title: {
 					text: null
 				}
@@ -157,7 +162,7 @@ function loadDiagram(paramType, paramId) {
 			credits: {
 				enabled: false
 			},
-			series: data.series
+			series: reversedDataSeries
 		};
 		Highcharts.chart('containerDiagram', chart);
 	});
