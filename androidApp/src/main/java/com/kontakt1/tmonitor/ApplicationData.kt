@@ -2,18 +2,20 @@ package com.kontakt1.tmonitor
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import com.kontakt1.tmonitor.asyncTasks.Connect
 import com.kontakt1.tmonitor.dataClasses.Silabus
 import com.kontakt1.tmonitor.dataClasses.params.TParam
 import com.kontakt1.tmonitor.dataClasses.params.interfaces.Param
 import com.kontakt1.tmonitor.settings.SettingsController
+import com.kontakt1.tmonitor.systems.System
 import com.kontakt1.tmonitor.systems.askt01.Askt01
+import com.kontakt1.tmonitor.systems.askubuk01.AskuBUK01
 import kotlinx.coroutines.*
 import java.lang.ref.WeakReference
 import java.sql.Connection
 import java.util.*
-import com.kontakt1.tmonitor.systems.askubuk01.AskuBUK01
-import com.kontakt1.tmonitor.systems.System
+
 
 /**
  * Главный статический класс приложения. Хранит в себе ссфлку на настройки, ссылки на оббработчики событий для UI,
@@ -140,6 +142,11 @@ object ApplicationData {
                     else Connect.connectMySQL(settings.settingsData, numberAttempts)
                 } catch (e:Exception) {
                     e.printStackTrace()
+                    launch(Dispatchers.Main) {
+                        val messge = e.cause?.message
+                        val toast = Toast.makeText(context, messge, Toast.LENGTH_LONG)
+                        toast.show()
+                    }
                 }
             }
             launch(Dispatchers.Main) {
