@@ -33,10 +33,14 @@ function chartAndDiagramUpdate(paramType, paramId, datetimefrom, datetimeto) {
     loadDiagram(paramType, paramId);
 }
 
+function convertDateToUTC(date) {
+    return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+}
+
 function loadChart(paramType, paramId, datetimefrom, datetimeto) {
 	$.get("api/v1/indications?paramType=" + paramType + "&paramId=" + paramId + "&datetimefrom=" + datetimefrom + "&datetimeto=" + datetimeto, function(data) {
-		var parsedDatetimeFrom = new Date(datetimefrom);
-		var parsedDatetimeTo = new Date(datetimeto);
+		var parsedDatetimeFrom = convertDateToUTC(new Date(datetimefrom));
+		var parsedDatetimeTo = convertDateToUTC(new Date(datetimeto));
 		let chart = {
 			chart: {
 				type: 'spline'
@@ -99,6 +103,11 @@ function loadChart(paramType, paramId, datetimefrom, datetimeto) {
 				}]
 			}
 		};
+		Highcharts.setOptions({
+            time: {
+                useUTC: false
+            }
+        });
 		Highcharts.chart('container', chart);
 	});
 }
