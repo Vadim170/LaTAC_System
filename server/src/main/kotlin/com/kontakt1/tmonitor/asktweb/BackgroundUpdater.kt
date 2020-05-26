@@ -39,7 +39,7 @@ class BackgroundUpdater {
                 val isNeedNotification = connection.let { system.silabus.readAllStates(it) }
                 onPostExecuteReadAllStates(isNeedNotification)
                 connection.close()
-                delay(5_000) // 300_000) // Каждые 5 минут
+                delay(30_000) // 300_000) // Каждые 5 минут
             }
         }
     }

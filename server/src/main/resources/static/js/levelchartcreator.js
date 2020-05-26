@@ -53,9 +53,6 @@ function loadChart(paramType, paramId, datetimefrom, datetimeto) {
 					month: '%e. %b',
 					year: '%b'
 				},
-				title: {
-					text: 'Date'
-				},
 				min: parsedDatetimeFrom.valueOf(),
 				max: parsedDatetimeTo.valueOf()
 			},
@@ -67,7 +64,7 @@ function loadChart(paramType, paramId, datetimefrom, datetimeto) {
 			},
 			tooltip: {
 				headerFormat: '<b>{series.name}</b><br>',
-				pointFormat: '{point.x:%e. %b}:<br>{point.y:.2f}'
+                pointFormat: '{point.x:%e.%b/%H:%M }:<br>{point.y:.2f}'
 			},
 
 			plotOptions: {

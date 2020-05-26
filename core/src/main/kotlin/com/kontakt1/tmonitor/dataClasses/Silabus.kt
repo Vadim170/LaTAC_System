@@ -58,12 +58,12 @@ class Silabus {
     }
 	
 	private fun getResultSetLConstraintsStates(connection: Connection): ResultSet? {
-        val stmt = connection.createStatement()
+        val stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY)
         return stmt?.executeQuery("SELECT prm_id, cnstr_id, cnstr_state, cnstr_last_savetime FROM lcnstr")
     }
 	
     private fun getResultSetTConstraintsStates(connection: Connection): ResultSet? {
-        val stmt = connection.createStatement()
+        val stmt = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY)
         return stmt?.executeQuery("SELECT prm_id, cnstr_id, cnstr_state, cnstr_last_savetime FROM tcnstr")
     }
 	
