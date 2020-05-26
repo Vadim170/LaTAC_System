@@ -63,8 +63,7 @@ function loadChart(paramType, paramId, datetimefrom, datetimeto) {
 			yAxis: {
 				title: {
 					//text: 'Snow depth (m)'
-				},
-				min: 0
+				}
 			},
 			tooltip: {
 				headerFormat: '<b>{series.name}</b><br>',
@@ -137,7 +136,6 @@ function loadDiagram(paramType, paramId) {
 				}
 			},
 			yAxis: {
-				min: 0,
 				title: {
 					text: 'Temperature (°C)',
 					align: 'high'
