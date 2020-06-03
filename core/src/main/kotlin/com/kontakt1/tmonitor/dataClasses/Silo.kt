@@ -39,4 +39,24 @@ class Silo(val name:String,
     override fun toString(): String {
         return Gson().toJson(this)
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Silo
+
+        if (name != other.name) return false
+        if (dir != other.dir) return false
+        if (params != other.params) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + dir.hashCode()
+        result = 31 * result + params.hashCode()
+        return result
+    }
 }

@@ -41,7 +41,7 @@
 
         <activity
             android:name=".ui.activities.MainActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/AppTheme"
             android:launchMode="singleInstance"
             android:multiprocess="false">
@@ -52,14 +52,14 @@
         </activity>
         <activity
             android:name=".ui.activities.AboutActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:launchMode="singleInstance"
             android:multiprocess="false">
         </activity>
         <activity
             android:name=".ui.activities.SettingsActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="nosensor"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:launchMode="singleInstance"
             android:multiprocess="false">

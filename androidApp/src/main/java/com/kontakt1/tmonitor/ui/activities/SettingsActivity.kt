@@ -23,6 +23,7 @@ class SettingsActivity : AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         val settings = ApplicationData.settingsController?.settingsData
+        cbConnectByRest.setOnCheckedChangeListener(::cbConnectByRestOnChackedChange)
         // Назначение обработчиков нажатий по кнопкам
         if (settings != null) {
             cbRemember.isChecked = settings.isAutofillOn
@@ -32,7 +33,6 @@ class SettingsActivity : AppCompatActivity()  {
         }
         cbServiceEnabled.setOnCheckedChangeListener(::cbServiceEnabledOnChackedChange)
         cbDefaultDBName.setOnCheckedChangeListener(::cbDefaultDBNameOnChackedChange)
-        cbConnectByRest.setOnCheckedChangeListener(::cbConnectByRestOnChackedChange)
         spnrSelectedSystem.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 setDefDBNameIfNeed()
@@ -80,10 +80,24 @@ class SettingsActivity : AppCompatActivity()  {
     private fun cbConnectByRestOnChackedChange(cb: CompoundButton, state: Boolean) {
         if (!state) {
             fcmUnsubscribe()
+            spnrSelectedSystem.isEnabled = true
+            etConnectPassword.isEnabled = true
+            etConnectLogin.isEnabled = true
+            etConnectPort.isEnabled = true
+            etDatabaseName.isEnabled = true
             etFCMTopic.isEnabled = true
+            cbDefaultDBName.isEnabled = true
+            cbServiceEnabled.isEnabled = true
         } else {
             fcmSubscribe()
+            spnrSelectedSystem.isEnabled = false
+            etConnectPassword.isEnabled = false
+            etConnectLogin.isEnabled = false
+            etConnectPort.isEnabled = false
+            etDatabaseName.isEnabled = false
             etFCMTopic.isEnabled = false
+            cbDefaultDBName.isEnabled = false
+            cbServiceEnabled.isEnabled = false
         }
     }
 

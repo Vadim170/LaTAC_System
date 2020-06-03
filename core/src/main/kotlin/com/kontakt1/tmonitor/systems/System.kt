@@ -115,29 +115,22 @@ abstract class System {
                 is TParam -> {
                     // TODO Здесь происходит преобразование в Indication с массивом, а после при
                     //  отображении в массив показаний. Это надо переделать и везде хранить массив Indications
-                    val indications = mutableListOf<MutableList<Float>>()
-                    val calendars = mutableListOf<Calendar>()
-                    val length = chartData.series.count()
-                    val countIndications = chartData.series[0].data.count()
-
-                    chartData.series.mapIndexed { indexSensor, series -> // 20
-                        indications[indexSensor].addAll(
-                                series.data.mapIndexed { indexIndication, list -> // 3
-                                    val calendar = Calendar.getInstance()
-                                    calendar.timeInMillis = list[0].toLong()
-                                    if(calendars.getOrNull(indexIndication) == null) calendars.add(indexIndication, calendar)
-
-                                    val indication = indications.getOrNull(indexSensor)
-                                    if(indication == null)
-                                        indications.add(indexSensor, mutableListOf())
-                                    list[1]
-                                })
-
+                    try {
+                        val result = chartData.series[0].data.mapIndexed { index, list ->
+                            val dt = chartData.series[0].data[index][0]
+                            val calendar = Calendar.getInstance()
+                            calendar.timeInMillis = dt.toLong()
+                            val tempArray = chartData.series.map {
+                                val value = it.data[index][1]
+                                value as Float?
+                            }
+                            val typedTempArray = tempArray.toTypedArray()
+                            TIndication(calendar, typedTempArray)
+                        }
+                        result
+                    } catch (e: Exception) {
+                        emptyList()
                     }
-                    return calendars.mapIndexed { index, calendar ->
-                        TIndication(calendar, indications[index].toTypedArray())
-                    }
-                    emptyList()
                 }
                 is LDUpParam -> {
                     chartData.series[0].data.map {
@@ -207,6 +200,8 @@ abstract class System {
         }
     }
 
+    abstract suspend fun readAllStatesByRestApi(address: String?)
+
     fun clear() {
         silabus.listSilo.clear()
         selectedSilo = null
@@ -219,6 +214,7 @@ abstract class System {
 
     abstract fun readMnemoschems(connection: Connection): List<Mnemoscheme>
 
+    abstract suspend fun readAllStatesByJdbc(connection: Connection) : Boolean
 
     interface EventReadSilosUIListener {
         fun onUpdate()

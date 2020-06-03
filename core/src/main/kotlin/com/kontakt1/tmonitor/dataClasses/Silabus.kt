@@ -49,7 +49,6 @@ class Silabus {
                     resultsetLDDownConstraints
                 )
             }
-            connection.close()
             return params.any { it.isNeedNotification }
         } catch (e: Exception) {
             e.printStackTrace()

@@ -4,17 +4,12 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.*
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.messaging.FirebaseMessaging
 import com.kontakt1.tmonitor.ApplicationData
 import com.kontakt1.tmonitor.MyFirebaseMessagingService
 import com.kontakt1.tmonitor.R
@@ -79,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         receiver = object : BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent) {
-                ApplicationData.readSilos(this@MainActivity)
+                ApplicationData.updateStatesRest(this@MainActivity)
 
                 val title = intent.getStringExtra("title")
                 val message = intent.getStringExtra("message")
@@ -157,11 +152,15 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            ResultsActivity.CONNECT.ordinal ->
-                when(resultCode) {
-                    Activity.RESULT_OK -> {} // Соединение установлено
-                    Activity.RESULT_CANCELED -> {} // Вышли без подключения
+            ResultsActivity.CONNECT.ordinal -> {
+                when (resultCode) {
+                    Activity.RESULT_OK -> {
+                    } // Соединение установлено
+                    Activity.RESULT_CANCELED -> {
+                    } // Вышли без подключения
                 }
+                selectedFragment = FragmentEnum.SILABUS
+            }
             ResultsActivity.ABOUT.ordinal -> {}
         }
     }

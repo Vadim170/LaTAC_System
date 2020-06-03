@@ -21,7 +21,15 @@ class AskuBUK01 : System() {
         selectedParam: Param<*>
     ) = IndicationsAskuBUK01Reader.read(connection, timestampFrom, timestampTo, selectedParam)
 
+    override suspend fun readAllStatesByRestApi(address: String?) {
+        TODO("Not yet implemented")
+    }
+
     override fun readMnemoschems(connection: Connection) = listOf<Mnemoscheme>()
+
+    override suspend fun readAllStatesByJdbc(connection: Connection): Boolean {
+        TODO("Not yet implemented")
+    }
 
     override suspend fun readLastTempIndications(
         connection: Connection,

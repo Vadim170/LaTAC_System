@@ -37,6 +37,30 @@ abstract class Param<T : Indication?>(
     override fun toString(): String {
         return Gson().toJson(this)
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Param<*>) return false
+
+        if (id != other.id) return false
+        if (alias != other.alias) return false
+        if (name != other.name) return false
+        if (parent != other.parent) return false
+        if (numberMinutesRelevant != other.numberMinutesRelevant) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = id
+        result = 31 * result + alias.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + parent
+        result = 31 * result + numberMinutesRelevant.hashCode()
+        return result
+    }
+
+
 }
 
 /**

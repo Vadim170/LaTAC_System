@@ -70,4 +70,36 @@ class CompleteParam(
     override fun toString(): String {
         return Gson().toJson(this)
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as CompleteParam
+
+        if (name != other.name) return false
+        if (lParam != other.lParam) return false
+        if (tParam != other.tParam) return false
+        if (ldUpParam != other.ldUpParam) return false
+        if (ldDownParam != other.ldDownParam) return false
+        if (description != other.description) return false
+        if (rezType != other.rezType) return false
+        if (hasDiscreteParams != other.hasDiscreteParams) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + (lParam?.hashCode() ?: 0)
+        result = 31 * result + (tParam?.hashCode() ?: 0)
+        result = 31 * result + (ldUpParam?.hashCode() ?: 0)
+        result = 31 * result + (ldDownParam?.hashCode() ?: 0)
+        result = 31 * result + description.hashCode()
+        result = 31 * result + rezType.hashCode()
+        result = 31 * result + hasDiscreteParams.hashCode()
+        return result
+    }
+
+
 }

@@ -30,7 +30,7 @@ object ApplicationData {
     var serviceIsRunning = false // Флаг работы потока обновления состояний
         set(value) {
             field = value
-            if(value) runReadAllLastIndicationsThread()
+            if(value) runJdbcReadAllLastIndicationsThread()
         }
 
     var settingsController: SettingsController? = null // Задаю в сеттере context
@@ -242,24 +242,6 @@ object ApplicationData {
         }
     }
 
-    /**
-     * Обновление текущих показаний по всей структуре
-     */
-    fun runReadAllLastIndicationsThread() {
-        GlobalScope.launch {
-            while (serviceIsRunning && system.silabus.listSilo.isNotEmpty()) {
-                //val start = java.lang.System.nanoTime()
-                val isNeedNotification = connection?.let { system.silabus.readAllStates(it) } ?: false
-                //Log.i("TimeReadLastIndications", "${(System.nanoTime()-start)/1_000_000_000}")
-                launch(Dispatchers.Main) {
-                    indicationsAllReadListenerUI.get()?.onPostExecuteReadAllStates(isNeedNotification)
-                }
-                indicationsAllReadListenerService.get()?.onPostExecuteReadAllStates(isNeedNotification)
-                delay(900_000)
-            }
-        }
-    }
-
     fun initSettingsIfNotInited(context: Context) {
         if(settingsController == null) {
             settingsController = SettingsController(
@@ -319,6 +301,33 @@ object ApplicationData {
             val isSuccess = result != null
             launch(Dispatchers.Main) {
                 indicationsReadListenerUI.get()?.onPostExecuteReadIndicationsChart(selectedParam, isSuccess, result)
+            }
+        }
+    }
+
+    /**
+     * Обновление текущих показаний по всей структуре
+     */
+    fun runJdbcReadAllLastIndicationsThread() {
+        GlobalScope.launch {
+            while (serviceIsRunning && system.silabus.listSilo.isNotEmpty()) {
+                val isNeedNotification = (connection?.let { system.readAllStatesByJdbc(it) }) ?: false
+                launch(Dispatchers.Main) {
+                    indicationsAllReadListenerUI.get()?.onPostExecuteReadAllStates(isNeedNotification)
+                }
+                indicationsAllReadListenerService.get()?.onPostExecuteReadAllStates(isNeedNotification)
+                delay(900_000)
+            }
+        }
+    }
+
+    fun updateStatesRest(context: Context) {
+        resetStates()
+        GlobalScope.launch {
+            val address = settingsController?.settingsData?.address
+            address.let { system.readAllStatesByRestApi(it) }
+            launch(Dispatchers.Main) {
+                indicationsAllReadListenerUI.get()?.onPostExecuteReadAllStates(false)
             }
         }
     }
