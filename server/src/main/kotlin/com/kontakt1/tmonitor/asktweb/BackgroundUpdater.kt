@@ -83,7 +83,6 @@ class BackgroundUpdater {
     }
 
     private fun onPostExecuteReadAllStates(isNeedNotification: Boolean) {
-        // TODO Send notifications to all users if it need
         if(isNeedNotification) {
             val topic = ymlConfig.fcmkey
             val textMessage = NotificationTextCreator.generateText(system)

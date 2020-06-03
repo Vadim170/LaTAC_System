@@ -9,6 +9,7 @@ import com.kontakt1.tmonitor.systems.System
 import kotlinx.coroutines.runBlocking
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
+import org.springframework.util.ResourceUtils
 import java.io.FileInputStream
 import javax.annotation.PostConstruct
 import javax.sql.DataSource
@@ -35,6 +36,15 @@ class ApplicationController {
             connection.close()
         }
         backgroundUpdater.launchBackgroundRefresh()
+    }
+
+    private fun initFCM() {
+        val serviceAccount = ResourceUtils.getFile("classpath:data/kontak1-latac-firebase-adminsdk-ajri1-46c4a4482a.json").inputStream()
+        val options: FirebaseOptions = FirebaseOptions.Builder()
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setDatabaseUrl("https://kontak1-latac.firebaseio.com")
+                .build()
+        FirebaseApp.initializeApp(options)
     }
 }
 

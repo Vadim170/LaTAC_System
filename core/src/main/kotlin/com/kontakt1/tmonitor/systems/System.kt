@@ -129,7 +129,7 @@ abstract class System {
                         }
                         result
                     } catch (e: Exception) {
-                        emptyList()
+                        emptyList<Indication>()
                     }
                 }
                 is LDUpParam -> {
