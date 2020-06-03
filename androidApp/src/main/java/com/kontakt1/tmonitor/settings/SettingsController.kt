@@ -34,12 +34,14 @@ class SettingsController(
                     putString(SAVED_PASS, defaultSettings.password)
                     putString(SAVED_ADDRESS, defaultSettings.address)
                     putInt(SAVED_PORT, defaultSettings.port)
+                    putString(FCM_TOPIC, defaultSettings.fcmtopic)
                 } else {
                     putString(SAVED_DATABASE_NAME, databaseName)
                     putString(SAVED_LOGIN, login)
                     putString(SAVED_PASS, password)
                     putString(SAVED_ADDRESS, address)
                     putInt(SAVED_PORT, port)
+                    putString(FCM_TOPIC, fcmtopic)
                 }
             }
         }.apply()
@@ -67,7 +69,8 @@ class SettingsController(
                 login = getString(SAVED_LOGIN, default.login) ?: "",
                 password = getString(SAVED_PASS, default.password) ?: "",
                 address = getString(SAVED_ADDRESS, default.address) ?: "",
-                port = getInt(SAVED_PORT, default.port)
+                port = getInt(SAVED_PORT, default.port),
+                fcmtopic = getString(FCM_TOPIC, default.fcmtopic) ?: ""
             )
         }
     }
@@ -85,5 +88,6 @@ class SettingsController(
         private const val SAVED_PASS = "saved_pass"
         private const val SAVED_ADDRESS = "saved_address"
         private const val SAVED_PORT = "saved_port"
+        private const val FCM_TOPIC = ""
     }
 }

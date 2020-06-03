@@ -14,6 +14,7 @@ import com.kontakt1.tmonitor.asyncTasks.Connect
 import com.kontakt1.tmonitor.dataClasses.Silabus
 import com.kontakt1.tmonitor.dataClasses.params.interfaces.State
 import com.kontakt1.tmonitor.systems.System
+import com.kontakt1.tmonitor.utils.NotificationTextCreator
 import java.lang.ref.WeakReference
 
 class ServiceBackgroundRefresh : Service() {
@@ -86,7 +87,7 @@ class ServiceBackgroundRefresh : Service() {
             this,0, notificationIntent,
             PendingIntent.FLAG_CANCEL_CURRENT
         )*/
-        val text = notaficationText()
+        val text = NotificationTextCreator.generateText(ApplicationData.system)
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             //.setContentIntent(contentIntent)
             .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
@@ -101,28 +102,6 @@ class ServiceBackgroundRefresh : Service() {
             .build()
         notificationManager.notify(NOTIFY_ID, notification)
     }
-
-    private fun notaficationText(): String = StringBuilder()
-            .apply {
-                val allParams = ApplicationData.system.silabus.listSilo.flatMap { it.params }
-                val namesAlarmLevel = allParams.filter {
-                    it.lParam?.state == State.ALARM ||
-                            it.ldUpParam?.state == State.ALARM ||
-                            it.ldDownParam?.state == State.ALARM }
-                    .map { it.name }
-                if(namesAlarmLevel.isNotEmpty()) appendln("Аварии уровня: $namesAlarmLevel")
-                val namesAlarmTemp = allParams
-                    .filter { it.tParam?.state == State.ALARM }
-                    .map { it.name }
-                if(namesAlarmTemp.isNotEmpty()) appendln("Аварии температуры: $namesAlarmTemp")
-                val namesOldParams = allParams
-                    .filter { it.tParam?.state == State.OLD ||
-                            it.lParam?.state == State.OLD ||
-                            it.ldUpParam?.state == State.OLD ||
-                            it.ldDownParam?.state == State.OLD }
-                    .map { it.name }
-                if(namesOldParams.isNotEmpty()) appendln("Устаревшие данные: $namesOldParams")
-            }.toString().trim()
 
     /**
      * Обработчик процесса чтения всех показаний

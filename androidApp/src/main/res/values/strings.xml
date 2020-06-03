@@ -37,4 +37,9 @@
     <string name="cb_database_name_by_dafault">Название по умолчанию</string>
     <string name="tv_selected_system">Выбранная система</string>
     <string name="param_description">Description</string>
+
+    <string name="msg_subscribe_failed">Ошибка при подписке на уведомления</string>
+    <string name="msg_subscribed" translatable="false">Подписаны на уведомления %s</string>
+    <string name="msg_unsubscribed" translatable="false">Отписаны от уведомлений %s</string>
+    <string name="tv_fcm_topic">Ключ уведомлений</string>
 </resources>

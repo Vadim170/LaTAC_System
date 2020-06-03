@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Силос <th:block th:text="${siloName}"></th:block></title>
+    <title>Силос: <th:block th:text="${siloName}"></th:block></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
@@ -15,9 +15,9 @@
             <table class="table table-striped">
                 <tr>
                     <th>Уровень</th>
-                    <th>Температура</th>
                     <th>Д. верх</th>
                     <th>Д. нижн</th>
+                    <th>Температура</th>
                 </tr>
                 <tr th:each="completeParam : ${completeParams}">
                     <td>
@@ -27,16 +27,6 @@
                                     'background: #FF7A7A' : 'background: #9C9C9C')" >
                                 <a th:href="@{'indications?paramType=Level&amp;paramId=' + ${completeParam.lParam.id}}"
                                    th:text="${completeParam.lParam.alias}"></a>
-                            </div>
-                        </th:block>
-                    </td>
-                    <td>
-                        <th:block th:if="${completeParam.tParam != null}">
-                            <div th:style="${completeParam.tParam.state.value == 1} ?
-                                'background: #CEFFAD' : (${completeParam.tParam.state.value == 0} ?
-                                    'background: #FF7A7A' : 'background: #9C9C9C')" >
-                                <a th:href="@{'indications?paramType=Temperature&amp;paramId=' + ${completeParam.tParam.id}}"
-                                   th:text="${completeParam.tParam.alias}"></a>
                             </div>
                         </th:block>
                     </td>
@@ -57,6 +47,16 @@
                                     'background: #FF7A7A' : 'background: #9C9C9C')" >
                                 <a th:href="@{'indications?paramType=LevelDiscreteDown&amp;paramId=' + ${completeParam.ldDownParam.id}}"
                                    th:text="${completeParam.ldDownParam.alias}"></a>
+                            </div>
+                        </th:block>
+                    </td>
+                    <td>
+                        <th:block th:if="${completeParam.tParam != null}">
+                            <div th:style="${completeParam.tParam.state.value == 1} ?
+                                'background: #CEFFAD' : (${completeParam.tParam.state.value == 0} ?
+                                    'background: #FF7A7A' : 'background: #9C9C9C')" >
+                                <a th:href="@{'indications?paramType=Temperature&amp;paramId=' + ${completeParam.tParam.id}}"
+                                   th:text="${completeParam.tParam.alias}"></a>
                             </div>
                         </th:block>
                     </td>

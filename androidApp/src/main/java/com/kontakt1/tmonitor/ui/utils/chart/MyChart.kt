@@ -28,6 +28,8 @@ import com.kontakt1.tmonitor.ui.utils.chart.markers.LvlMarkerView
 import com.kontakt1.tmonitor.ui.utils.chart.markers.TempMarkerView
 import com.kontakt1.tmonitor.utils.datetime.myStringFormat
 import java.util.*
+import kotlin.time.hours
+import kotlin.time.milliseconds
 
 /**
  * Цвета для графиков темперытуры в порядке нумеации датчиков.
@@ -119,7 +121,7 @@ fun LineChart.mySetData(param: Param<*>?, indications: List<Indication>, dateTim
 private fun getValuesList(indications: List<Indication>, sensor: Int, dateTimeFrom: Calendar,
                           dateTimeTo: Calendar) =
     mutableListOf<Entry>().apply {
-        for (indication in indications) {
+        indications.forEachIndexed { index, indication ->
             val dateTime = indication.dateTime.timeInMillis
             val value = when (indication) {
                 is LIndication -> indication.value
@@ -127,12 +129,14 @@ private fun getValuesList(indications: List<Indication>, sensor: Int, dateTimeFr
                 is DiscreteIndication -> indication.value.value.toFloat()
                 else -> null
             }
-            if(indications.indexOf(indication) == 0) {
+            if(index == 0) {
                 // Добавим псевдоточку для того чтобы можно было масштабировать график до ограничений по горизонтали
                 add(Entry(dateTimeFrom.timeInMillis.toFloat(), value?:0f))
             }
-            value?.let{ add(Entry(dateTime.toFloat(), value))}
-            if(indications.indexOf(indication) == indications.lastIndex) {
+            value?.let{
+                add(Entry(dateTime.toFloat(), value))
+            }
+            if(index == indications.lastIndex) {
                 // Добавим вторую псевдоточку для того чтобы можно было масштабировать график до ограничений по горизонтали
                 add(Entry(dateTimeTo.timeInMillis.toFloat(), value?:0f))
             }

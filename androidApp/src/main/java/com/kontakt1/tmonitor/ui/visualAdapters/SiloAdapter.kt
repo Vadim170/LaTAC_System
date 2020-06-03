@@ -24,7 +24,7 @@ class SiloAdapter(context: Context, private val layout: Int, private val silos: 
 
     private val inflater = LayoutInflater.from(context)
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val view = inflater.inflate(this.layout, parent, false)
 
         val tvName = view.findViewById<TextView>(R.id.tvSelectedSiloName)

@@ -1,7 +1,11 @@
 package com.kontakt1.tmonitor.asktweb
 
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.Message
+import com.kontakt1.tmonitor.asktweb.api.v1.YMLConfig
 import com.kontakt1.tmonitor.asktweb.api.v1.websocket.WebsocketHandler
 import com.kontakt1.tmonitor.systems.System
+import com.kontakt1.tmonitor.utils.NotificationTextCreator
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -22,6 +26,8 @@ class BackgroundUpdater {
     lateinit var dataSource: DataSource
     @Autowired
     lateinit var system: System
+    @Autowired
+    lateinit var ymlConfig: YMLConfig
 
     var serviceIsRunning = true
 
@@ -78,5 +84,23 @@ class BackgroundUpdater {
 
     private fun onPostExecuteReadAllStates(isNeedNotification: Boolean) {
         // TODO Send notifications to all users if it need
+        if(isNeedNotification) {
+            val topic = ymlConfig.fcmkey
+            val textMessage = NotificationTextCreator.generateText(system)
+            sendFCMNotifications(topic, textMessage)
+        }
+    }
+
+    private fun sendFCMNotifications(topic: String, textMessage: String) {
+        // See documentation on defining a message payload.
+        val fcmMessage: Message = Message.builder()
+                .putData("title", "Внимание!")
+                .putData("message", textMessage)
+                .setTopic(topic)
+                .build()
+        // Send a message to the devices subscribed to the provided topic.
+        val response: String = FirebaseMessaging.getInstance().send(fcmMessage)
+        // Response is a message ID string.
+        println("Successfully sent message: $response")
     }
 }

@@ -1,20 +1,17 @@
 package com.kontakt1.tmonitor.ui.activities
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.CompoundButton
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kontakt1.tmonitor.ApplicationData
 import com.kontakt1.tmonitor.R
-import com.kontakt1.tmonitor.asyncTasks.Connect
 import kotlinx.android.synthetic.main.activity_settings.*
-import java.lang.ref.WeakReference
 
 /**
  * Класс активности для подключения он-же пока используется для отображения настроек.
@@ -30,9 +27,12 @@ class SettingsActivity : AppCompatActivity()  {
         if (settings != null) {
             cbRemember.isChecked = settings.isAutofillOn
             cbServiceEnabled.isChecked = settings.isServiceEnabled
+            cbConnectByRest.isChecked = settings.useRestServer
+            etFCMTopic.isEnabled = !settings.useRestServer
         }
         cbServiceEnabled.setOnCheckedChangeListener(::cbServiceEnabledOnChackedChange)
         cbDefaultDBName.setOnCheckedChangeListener(::cbDefaultDBNameOnChackedChange)
+        cbConnectByRest.setOnCheckedChangeListener(::cbConnectByRestOnChackedChange)
         spnrSelectedSystem.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 setDefDBNameIfNeed()
@@ -58,9 +58,9 @@ class SettingsActivity : AppCompatActivity()  {
      * Сохраняем настройки при выходе из формы
      */
     override fun onDestroy() {
-        super.onDestroy()
         ApplicationData.settingsController?.save()
         updateConnectSettings()
+        super.onDestroy()
     }
 
     /**
@@ -75,6 +75,40 @@ class SettingsActivity : AppCompatActivity()  {
     private fun cbDefaultDBNameOnChackedChange(cb: CompoundButton, state: Boolean) {
         etDatabaseName.isEnabled = !state
         setDefDBNameIfNeed()
+    }
+
+    private fun cbConnectByRestOnChackedChange(cb: CompoundButton, state: Boolean) {
+        if (!state) {
+            fcmUnsubscribe()
+            etFCMTopic.isEnabled = true
+        } else {
+            fcmSubscribe()
+            etFCMTopic.isEnabled = false
+        }
+    }
+
+    private fun fcmUnsubscribe() {
+        val topic = etFCMTopic.text.toString()
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(topic)
+                .addOnCompleteListener { task ->
+                    var msg = getString(R.string.msg_unsubscribed, topic)
+                    if (!task.isSuccessful) {
+                        msg = getString(R.string.msg_subscribe_failed)
+                    }
+                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                }
+    }
+
+    private fun fcmSubscribe() {
+        val topic = etFCMTopic.text.toString()
+        FirebaseMessaging.getInstance().subscribeToTopic(topic)
+                .addOnCompleteListener { task ->
+                    var msg = getString(R.string.msg_subscribed, topic)
+                    if (!task.isSuccessful) {
+                        msg = getString(R.string.msg_subscribe_failed)
+                    }
+                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                }
     }
 
     private fun setDefDBNameIfNeed() {
@@ -106,6 +140,7 @@ class SettingsActivity : AppCompatActivity()  {
                 address = etConnectAddress.text.toString()
                 port = etConnectPort.text.toString().toInt()
                 databaseName = etDatabaseName.text.toString()
+                fcmtopic = etFCMTopic.text.toString()
             }
         }
         ApplicationData.saveSettings(applicationContext)
@@ -129,6 +164,7 @@ class SettingsActivity : AppCompatActivity()  {
                 etConnectAddress.setText(address)
                 etConnectPort.setText(port.toString())
                 etDatabaseName.setText(databaseName)
+                etFCMTopic.setText(fcmtopic)
             }
         }
     }

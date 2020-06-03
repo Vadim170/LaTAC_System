@@ -19,8 +19,18 @@
         android:icon="@drawable/ic_logo_k1"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
         <service android:enabled="true" android:name=".ServiceBackgroundRefresh" />
+        <!-- [START firebase_service] -->
+        <service
+                android:name=".MyFirebaseMessagingService"
+                android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- [END firebase_service] -->
         <receiver android:name=".BroadReceiv">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>

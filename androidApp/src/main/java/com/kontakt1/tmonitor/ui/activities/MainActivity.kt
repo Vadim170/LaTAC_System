@@ -2,14 +2,21 @@ package com.kontakt1.tmonitor.ui.activities
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Intent
+import android.content.*
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.kontakt1.tmonitor.ApplicationData
+import com.kontakt1.tmonitor.MyFirebaseMessagingService
 import com.kontakt1.tmonitor.R
 import com.kontakt1.tmonitor.ui.activities.mainActivityFragments.ChartFragment
 import com.kontakt1.tmonitor.ui.activities.mainActivityFragments.DiagramFragment
@@ -55,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     private val chartFragment = ChartFragment.newInstance()
     private val diagramFragment = DiagramFragment.newInstance()
 
-    //private val TAG = this.javaClass.simpleName
+    lateinit var receiver: BroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,8 +77,34 @@ class MainActivity : AppCompatActivity() {
         chartFragment.onChangeFragment = ::onChangeFragment     // "Даём фрагменту инструмент для смены себя на другой фрагмент"
         diagramFragment.onChangeFragment = ::onChangeFragment  // "Даём фрагменту инструмент для смены себя на другой фрагмент"
 
+        receiver = object : BroadcastReceiver(){
+            override fun onReceive(context: Context?, intent: Intent) {
+                ApplicationData.readSilos(this@MainActivity)
+
+                val title = intent.getStringExtra("title")
+                val message = intent.getStringExtra("message")
+                AlertDialog
+                        .Builder(this@MainActivity)
+                        .setTitle(title)
+                        .setMessage(message)
+                        .setPositiveButton("Ok") { dialogInterface: DialogInterface, i: Int -> }
+                        .create().show()
+            }
+        }
+
         ApplicationData.initSettingsIfNotInited(applicationContext)
         ApplicationData.autoConnect(applicationContext)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val filter = IntentFilter(MyFirebaseMessagingService.INTENT_ACTION_SEND_MESSAGE)
+        LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
     }
 
     /**
@@ -148,6 +181,10 @@ class MainActivity : AppCompatActivity() {
     enum class ResultsActivity {
         CONNECT,
         ABOUT
+    }
+
+    companion object {
+        private const val TAG = "MainActivity"
     }
 }
 

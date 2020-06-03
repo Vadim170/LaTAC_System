@@ -18,5 +18,6 @@ data class Settings(
     var address: String = "",
     var port: Int = 3306,
     var login: String = "",
-    var password: String = ""
+    var password: String = "",
+    var fcmtopic: String = ""
 )

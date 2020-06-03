@@ -52,9 +52,10 @@ class IndicationsASKT01Reader {
                     )
                     else -> emptyListForReturn
                 }
-                connection.close()
+                stmt.close()
                 result
             } catch (e: Exception) {
+                stmt.close()
                 e.printStackTrace()
                 emptyListForReturn // Возвращение пустого листа будет считаться ошибкой загрузки данных
             }
@@ -80,7 +81,6 @@ class IndicationsASKT01Reader {
                 //    calculateSavetimeCalendar(resultset.getTimestamp("savetime"))
                 result.add(body(resultset,savetimeCalendar))
             }
-            stmt.close()
             return result
         }
 

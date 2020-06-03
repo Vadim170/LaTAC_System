@@ -2,8 +2,10 @@ package com.kontakt1.tmonitor.dataClasses.params.interfaces
 
 import com.kontakt1.tmonitor.dataClasses.ConstraintApplication
 import com.kontakt1.tmonitor.dataClasses.indications.interfaces.AnalogIndication
+import com.kontakt1.tmonitor.utils.datetime.myStringFormat
 import java.sql.ResultSet
 import java.sql.SQLException
+import java.sql.Timestamp
 import java.util.*
 
 /**
@@ -24,24 +26,24 @@ abstract class AnalogParams<T : AnalogIndication?>(
     override suspend fun updateState(resultSet: ResultSet) {
         try {
             resultSet.beforeFirst()
+            val lastState = state
             while (resultSet.next()) {
                 if(resultSet.getInt("prm_id") == id) {
                     val constraintId = resultSet.getInt("cnstr_id")
                     val constraintState = resultSet.getInt("cnstr_state")
-                    val saveTime = resultSet.getTimestamp("cnstr_last_savetime")
-                    saveTime ?: continue
-                    val serverTime = Calendar.getInstance()
-                    serverTime.timeInMillis = saveTime.time
+                    val lastSaveTime = resultSet.getTimestamp("cnstr_last_savetime")
+                    lastSaveTime ?: continue
+                    val serverLastSaveTime = Calendar.getInstance()
+                    serverLastSaveTime.timeInMillis = lastSaveTime.time
                     //val serverTime = calculateSavetimeCalendar(saveTime)
                     val cnstr = constraintsList.find { it.constraint.id == constraintId }
-                    if (isRelevantIndiacation(serverTime)) { // Показания есть и они актуальны
+                    if (isRelevantIndiacation(serverLastSaveTime)) { // Показания есть и они актуальны
                         cnstr?.state = State.getByInt(constraintState)
                     } else {
                         cnstr?.state = State.OLD
                     }
                 }
             }
-            val lastState = state
             state = when {
                 constraintsList.any { it.state == State.ALARM } -> State.ALARM
                 constraintsList.any { it.state == State.OLD } -> State.OLD

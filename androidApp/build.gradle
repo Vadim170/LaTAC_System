@@ -7,12 +7,13 @@ repositories {
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.kontakt1.tmonitor"
-        minSdkVersion 15
-        targetSdkVersion 28
+        minSdkVersion 16
+        targetSdkVersion 29
         versionCode 5
+        multiDexEnabled true
         versionName 'beta v0.2.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -58,7 +59,9 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.2.4"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.1.0'
-    testImplementation 'junit:junit:4.12'
+    //implementation 'com.google.firebase:firebase-analytics:17.4.2' // API 15 'com.google.firebase:firebase-iid:17.0.3'
+    implementation 'com.google.firebase:firebase-messaging:20.2.0'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {

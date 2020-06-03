@@ -162,7 +162,7 @@ object ApplicationData {
     /**
      * Чтение силкорпуса.
      */
-    private fun readSilos(context: Context) {
+    fun readSilos(context: Context) {
         // Действия до начала загрузки
         system.clear()
         GlobalScope.launch(Dispatchers.Main) {
