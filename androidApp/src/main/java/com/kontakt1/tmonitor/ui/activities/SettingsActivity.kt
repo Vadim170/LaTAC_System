@@ -1,3 +1,11 @@
+/*
+ * Разработка мобильного приложения для системы АСКТ-01
+ * Макаров В.Г. ст.гр.644 направление: 09.03.03
+ * Жулева С.Ю. ст. преподаватель РГРТУ
+ * MySQL Front
+ * В этом файле описан класс активности с настройками приложения.
+ * Дата разработки: 16.04.2020
+ */
 package com.kontakt1.tmonitor.ui.activities
 
 import android.app.Activity
@@ -19,18 +27,23 @@ import kotlinx.android.synthetic.main.activity_settings.*
  */
 class SettingsActivity : AppCompatActivity()  {
 
+    /**
+     * Метод вызываемый после создания активности.
+     * @param savedInstanceState сохраненное состояние
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        setContentView(R.layout.activity_settings) // Задаем ресурс описывающий верстку объетков на активности.
         val settings = ApplicationData.settingsController?.settingsData
-        cbConnectByRest.setOnCheckedChangeListener(::cbConnectByRestOnChackedChange)
         // Назначение обработчиков нажатий по кнопкам
+        cbConnectByRest.setOnCheckedChangeListener(::cbConnectByRestOnChackedChange)
         if (settings != null) {
             cbRemember.isChecked = settings.isAutofillOn
             cbServiceEnabled.isChecked = settings.isServiceEnabled
             cbConnectByRest.isChecked = settings.useRestServer
             etFCMTopic.isEnabled = !settings.useRestServer
         }
+        // Задаем обработчик изменения состояния переключателя для включения фонового потока обновления.
         cbServiceEnabled.setOnCheckedChangeListener(::cbServiceEnabledOnChackedChange)
         cbDefaultDBName.setOnCheckedChangeListener(::cbDefaultDBNameOnChackedChange)
         loadConnectSettings()
@@ -40,6 +53,8 @@ class SettingsActivity : AppCompatActivity()  {
      * Обработка закрытия активности через кнопку "Назад"
      */
     override fun onBackPressed() {
+        // Проверяем: если кнопка подключения к БД не активна, значит в данный момент происходит подключение и
+        // запрещаем выходить из активности
         super.onBackPressed()
         val returnIntent = Intent()
         setResult(Activity.RESULT_CANCELED, returnIntent)
@@ -63,11 +78,17 @@ class SettingsActivity : AppCompatActivity()  {
         ApplicationData.resetStates()
     }
 
+    /**
+     * Изменение положения переключателя "Использовать название БД по умолчанию"
+     */
     private fun cbDefaultDBNameOnChackedChange(cb: CompoundButton, state: Boolean) {
         etDatabaseName.isEnabled = !state
         setDefDBNameIfNeed()
     }
 
+    /**
+     * Изменение положения переключателя "Подключаться посредством веб сервера"
+     */
     private fun cbConnectByRestOnChackedChange(cb: CompoundButton, state: Boolean) {
         if (!state) {
             fcmUnsubscribe()
@@ -90,6 +111,9 @@ class SettingsActivity : AppCompatActivity()  {
         }
     }
 
+    /**
+     * Функция подписки на уведомления FCM
+     */
     private fun fcmUnsubscribe() {
         val topic = etFCMTopic.text.toString()
         FirebaseMessaging.getInstance().unsubscribeFromTopic(topic)
@@ -102,6 +126,9 @@ class SettingsActivity : AppCompatActivity()  {
                 }
     }
 
+    /**
+     * Функция отписки от уведомлений FCM
+     */
     private fun fcmSubscribe() {
         val topic = etFCMTopic.text.toString()
         FirebaseMessaging.getInstance().subscribeToTopic(topic)
@@ -114,6 +141,9 @@ class SettingsActivity : AppCompatActivity()  {
                 }
     }
 
+    /**
+     * Установка названия базы данных по умолчанию, если это необходимо
+     */
     private fun setDefDBNameIfNeed() {
         if(cbDefaultDBName.isChecked) {
             val dafaultNames = resources.getStringArray(R.array.systems_default_db_names)
@@ -149,6 +179,9 @@ class SettingsActivity : AppCompatActivity()  {
         ApplicationData.saveSettings(applicationContext)
     }
 
+    /**
+     * Загрузить настройки приложения из памяти телефона.
+     */
     private fun loadConnectSettings() {
         ApplicationData.settingsController?.load()
         val settings = ApplicationData.settingsController
