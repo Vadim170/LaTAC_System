@@ -1,3 +1,11 @@
+/*
+ * Разработка мобильного приложения для системы АСКТ-01
+ * Макаров В.Г. ст.гр.644 направление: 09.03.03
+ * Жулева С.Ю. ст. преподаватель РГРТУ
+ * MySQL Front
+ * В этом файле описан главный статический класс приложения, в нем хранится состояние запущенного приложения.
+ * Дата разработки: 16.04.2020
+ */
 package com.kontakt1.tmonitor
 
 import android.content.Context
@@ -22,9 +30,9 @@ import java.util.*
  * @author Makarov V.G.
  */
 object ApplicationData {
-    private const val NUMBER_ATTEMPTS_AUTOCONNECT = 20
-    private const val NUMBER_ATTEMPTS_READ_SILOS = 5
-    private const val SETTINGS_NAME = "settings"
+    private const val NUMBER_ATTEMPTS_AUTOCONNECT = 20 // Колличество попыток автоподключения к базе данных
+    private const val NUMBER_ATTEMPTS_READ_SILOS = 5 // Колличество попыток чтения силоса
+    private const val SETTINGS_NAME = "settings" // Название файла настроек
 
     var serviceIsRunning = false // Флаг работы потока обновления состояний
         set(value) {
@@ -34,9 +42,8 @@ object ApplicationData {
 
     var settingsController: SettingsController? = null // Задаю в сеттере context
 
-    var system: System = Askt01()
-    /*private*/ var connection : Connection? = null     // Подключение
-    //val silabus = Silabus()                             // Силкорпус
+    var system: System = Askt01()           // Система
+    var connection : Connection? = null     // Подключение
 
     // Это слабая ссылка на обработчик событий для силкорпуса, вызывается когда нужно обновить фрагмент на главном окне
     // Слабая потому, что нужно освободить память от обработчика, если форма не открыта. Обработчик задается
@@ -68,12 +75,20 @@ object ApplicationData {
         }
     }
 
+    /**
+     * Запуск фонового сервиса.
+     * @param context контекст приложения
+     */
     private fun startService(context: Context) {
         if (serviceIsRunning) return // Если уже работает, ничего не запускаем
         context.startService(Intent(context, ServiceBackgroundRefresh::class.java))
         serviceIsRunning = true // По этому флагу работает поток опроса состояний
     }
 
+    /**
+     * Остановка фонового сервиса.
+     * @param context контекст приложения
+     */
     private fun stopService(context: Context) {
         context.stopService(Intent(context, ServiceBackgroundRefresh::class.java))
         serviceIsRunning = false
@@ -82,6 +97,7 @@ object ApplicationData {
     /**
      * Выполнение автоматического подключение. Подключение будет устонавливаться только если автоподключение включено
      * в настройках и если подлючение ещё не установлено в даный момент.
+     * @param context контекст приложения
      */
     fun autoConnect(context: Context) {
         // Если автозаполнение/авоподключение выключено, то и не пытаемся подключиться, чтобы не нагружать.
@@ -96,7 +112,8 @@ object ApplicationData {
 
     /**
      * Выполняет заданное количество раз попытку подключения если подключение не установленно.
-     * @param numberAttempts количество попыток установки подключения.
+     * @param numberAttempts количество попыток установки подключения
+     * @param context контекст приложения
      */
     fun connectIfNotConnected(context: Context, numberAttempts: Int? = null) {
         val isConnected = try {
@@ -110,6 +127,7 @@ object ApplicationData {
 
     /**
      * Отчистка всех данных о соединении.
+     * @param context контекст приложения
      */
     private fun clear(context: Context) {
         stopService(context)
@@ -119,7 +137,8 @@ object ApplicationData {
 
     /**
      * Подключение к базе данных.
-     * @param numberAttempts количество попыток установки подключения.
+     * @param numberAttempts количество попыток установки подключения
+     * @param context контекст приложения
      */
     fun connect(context: Context, numberAttempts: Int? = null) {
         if(settingsController?.settingsData?.useRestServer == true) {
@@ -160,6 +179,7 @@ object ApplicationData {
 
     /**
      * Чтение силкорпуса.
+     * @param context контекст приложения
      */
     fun readSilos(context: Context) {
         // Действия до начала загрузки
@@ -196,9 +216,10 @@ object ApplicationData {
     /**
      * Чтение листа показаний
      * Ссылка на UI обработчик слабая и если пользователь уйдет с графика, то он не вызовется.
-     * @param indicationsReadIndicationsUIListenerReader ссылка на бработчик событий для UI
+     * @param readIndicationsChartListenerUI ссылка на бработчик событий для UI
      * @param dateTimeFrom момент времени с которого начинается загрузка
      * @param dateTimeTo момент времени до которого загружаются данные
+     * @param context контекст приложения
      */
     fun readIndications(
         context: Context?,
@@ -241,6 +262,9 @@ object ApplicationData {
         }
     }
 
+    /**
+     * Инициализация настроек приложения, если они не были иничиализированы
+     */
     fun initSettingsIfNotInited(context: Context) {
         if(settingsController == null) {
             settingsController = SettingsController(
@@ -253,17 +277,26 @@ object ApplicationData {
         }
     }
 
+    /**
+     * Сбросить состояния
+     */
     fun resetStates() {
         system.silabus.resetState()
         indicationsAllReadListenerUI.get()?.onPostExecuteReadAllStates(false)
     }
 
+    /**
+     * Сохранить настройки
+     */
     fun saveSettings(context: Context) {
         settingsController?.save()
         initSystem(context)
         connect(context)
     }
 
+    /**
+     * Инициализация используемой системы
+     */
     private fun initSystem(context: Context) {
         val selectedSystem = settingsController!!.settingsData.selectedSystem
         system = when (selectedSystem) {
@@ -272,6 +305,13 @@ object ApplicationData {
         }
     }
 
+    /**
+     * Чтение последних показаний температуры
+     * Ссылка на UI обработчик слабая и если пользователь уйдет с графика, то он не вызовется.
+     * @param readIndicationsChartListenerUI ссылка на бработчик событий для UI
+     * @param context контекст приложения
+     * @param selectedParam выбранный параметр
+     */
     fun readLastTempIndications(context: Context?, indicationsReadIndicationsUIListenerReader: com.kontakt1.tmonitor.systems.System.EventReadIndicationsUIListener, selectedParam: Param<*>) {
         if(selectedParam !is TParam) return
         // Это слабая ссылка на обработчик событий для силкорпуса, вызывается когда нужно обновить фрагмент на главном окне
@@ -319,6 +359,9 @@ object ApplicationData {
         }
     }
 
+    /**
+     * Обновление состояний через REST API
+     */
     fun updateStatesRest(context: Context) {
         resetStates()
         GlobalScope.launch {
