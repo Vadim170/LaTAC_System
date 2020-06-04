@@ -15,15 +15,15 @@
             <table class="table table-striped">
                 <tr>
                     <th>Уровень</th>
-                    <th>Д. верх</th>
                     <th>Д. нижн</th>
+                    <th>Д. верх</th>
                     <th>Температура</th>
                 </tr>
                 <tr th:each="completeParam : ${completeParams}">
                     <td>
                         <th:block th:if="${completeParam.lParam != null}">
-                            <div th:style="${completeParam.lParam.state.value == 1} ?
-                                'background: #CEFFAD' : (${completeParam.lParam.state.value == 0} ?
+                            <div th:style="${completeParam.lParam.state.value == 0} ?
+                                'background: #CEFFAD' : (${completeParam.lParam.state.value == 1} ?
                                     'background: #FF7A7A' : 'background: #9C9C9C')" >
                                 <a th:href="@{'indications?paramType=Level&amp;paramId=' + ${completeParam.lParam.id}}"
                                    th:text="${completeParam.lParam.alias}"></a>
@@ -31,19 +31,9 @@
                         </th:block>
                     </td>
                     <td>
-                        <th:block th:if="${completeParam.ldUpParam != null}">
-                            <div th:style="${completeParam.ldUpParam.state.value == 1} ?
-                                'background: #CEFFAD' : (${completeParam.ldUpParam.state.value == 0} ?
-                                    'background: #FF7A7A' : 'background: #9C9C9C')" >
-                                <a th:href="@{'indications?paramType=LevelDiscreteUp&amp;paramId=' + ${completeParam.ldUpParam.id}}"
-                                   th:text="${completeParam.ldUpParam.alias}"></a>
-                            </div>
-                        </th:block>
-                    </td>
-                    <td>
                         <th:block th:if="${completeParam.ldDownParam != null}">
-                            <div th:style="${completeParam.ldDownParam.state.value == 1} ?
-                                'background: #CEFFAD' : (${completeParam.ldDownParam.state.value == 0} ?
+                            <div th:style="${completeParam.ldDownParam.state.value == 0} ?
+                                'background: #CEFFAD' : (${completeParam.ldDownParam.state.value == 1} ?
                                     'background: #FF7A7A' : 'background: #9C9C9C')" >
                                 <a th:href="@{'indications?paramType=LevelDiscreteDown&amp;paramId=' + ${completeParam.ldDownParam.id}}"
                                    th:text="${completeParam.ldDownParam.alias}"></a>
@@ -51,9 +41,19 @@
                         </th:block>
                     </td>
                     <td>
+                        <th:block th:if="${completeParam.ldUpParam != null}">
+                            <div th:style="${completeParam.ldUpParam.state.value == 0} ?
+                                'background: #CEFFAD' : (${completeParam.ldUpParam.state.value == 1} ?
+                                    'background: #FF7A7A' : 'background: #9C9C9C')" >
+                                <a th:href="@{'indications?paramType=LevelDiscreteUp&amp;paramId=' + ${completeParam.ldUpParam.id}}"
+                                   th:text="${completeParam.ldUpParam.alias}"></a>
+                            </div>
+                        </th:block>
+                    </td>
+                    <td>
                         <th:block th:if="${completeParam.tParam != null}">
-                            <div th:style="${completeParam.tParam.state.value == 1} ?
-                                'background: #CEFFAD' : (${completeParam.tParam.state.value == 0} ?
+                            <div th:style="${completeParam.tParam.state.value == 0} ?
+                                'background: #CEFFAD' : (${completeParam.tParam.state.value == 1} ?
                                     'background: #FF7A7A' : 'background: #9C9C9C')" >
                                 <a th:href="@{'indications?paramType=Temperature&amp;paramId=' + ${completeParam.tParam.id}}"
                                    th:text="${completeParam.tParam.alias}"></a>
