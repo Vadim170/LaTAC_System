@@ -15,21 +15,9 @@
                 android:gravity="top|left"
                 android:text="@string/cbConnectByRest"
                 android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="@+id/spnrSelectedSystem"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/spnrSelectedSystem"
-                app:layout_constraintTop_toBottomOf="@+id/cbDisplayTimeByServerTimeZone"/>
-
-        <TextView
-                android:id="@+id/tvAddress2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/tv_selected_system"
-                app:layout_constraintStart_toStartOf="@+id/spnrSelectedSystem"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/cbDisplayTimeByServerTimeZone"
+                app:layout_constraintStart_toStartOf="@+id/cbDisplayTimeByServerTimeZone"
+                app:layout_constraintEnd_toEndOf="@+id/cbDisplayTimeByServerTimeZone"/>
 
         <CheckBox
                 android:id="@+id/cbDefaultDBName"
@@ -50,10 +38,9 @@
                 android:layout_marginTop="8dp"
                 android:gravity="top|left"
                 android:text="@string/cb_time_by_server_time_zone"
-                app:layout_constraintEnd_toEndOf="@+id/spnrSelectedSystem"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/spnrSelectedSystem"
-                app:layout_constraintTop_toBottomOf="@+id/cbServiceEnabled" />
+                app:layout_constraintTop_toBottomOf="@+id/cbServiceEnabled"
+                app:layout_constraintEnd_toEndOf="@+id/cbServiceEnabled"
+                app:layout_constraintStart_toStartOf="@+id/cbServiceEnabled"/>
 
         <TextView
                 android:id="@+id/tvDatabaseName"
@@ -61,23 +48,21 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tv_database_name"
                 app:layout_constraintBottom_toBottomOf="@+id/etDatabaseName"
-                app:layout_constraintStart_toStartOf="@+id/tvAddress2"
-                app:layout_constraintTop_toTopOf="@+id/etDatabaseName" />
+                app:layout_constraintTop_toTopOf="@+id/etDatabaseName"
+                app:layout_constraintStart_toStartOf="@+id/tvAddress"/>
 
         <EditText
                 android:id="@+id/etDatabaseName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:autofillHints="no"
                 android:ems="10"
                 android:hint="@string/tv_database_name"
                 android:text=""
-                app:layout_constraintEnd_toEndOf="@+id/spnrSelectedSystem"
                 app:layout_constraintTop_toBottomOf="@+id/etConnectAddress"
-                tools:targetApi="o" />
+                tools:targetApi="o" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="32dp"
+                android:layout_marginRight="32dp"/>
 
         <CheckBox
                 android:id="@+id/cbRemember"
@@ -86,10 +71,10 @@
                 android:layout_marginTop="8dp"
                 android:gravity="top|left"
                 android:text="@string/cb_autofill_text"
-                app:layout_constraintEnd_toEndOf="@+id/spnrSelectedSystem"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="@+id/spnrSelectedSystem"
-                app:layout_constraintTop_toBottomOf="@+id/etConnectPassword" />
+                app:layout_constraintTop_toBottomOf="@+id/etConnectPassword" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginRight="8dp" android:layout_marginEnd="8dp"
+                app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"/>
 
         <EditText
                 android:id="@+id/etConnectLogin"
@@ -128,9 +113,9 @@
                 android:inputType="textPersonName"
                 android:text=""
                 app:layout_constraintEnd_toStartOf="@+id/etConnectPort"
-                app:layout_constraintStart_toStartOf="@+id/spnrSelectedSystem"
                 app:layout_constraintTop_toBottomOf="@+id/tvAddress"
-                tools:targetApi="o" />
+                tools:targetApi="o" app:layout_constraintStart_toStartOf="parent" android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"/>
 
         <EditText
                 android:id="@+id/etConnectPort"
@@ -142,9 +127,9 @@
                 android:inputType="numberDecimal"
                 android:text=""
                 app:layout_constraintBottom_toBottomOf="@+id/tvConnectSeparator"
-                app:layout_constraintEnd_toEndOf="@+id/spnrSelectedSystem"
                 app:layout_constraintTop_toTopOf="@+id/tvConnectSeparator"
-                tools:targetApi="o" />
+                tools:targetApi="o" app:layout_constraintEnd_toEndOf="parent" android:layout_marginRight="32dp"
+                android:layout_marginEnd="32dp"/>
 
         <EditText
                 android:id="@+id/etConnectPassword"
@@ -162,12 +147,12 @@
 
         <TextView
                 android:id="@+id/tvAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_width="101dp"
+                android:layout_height="20dp"
                 android:text="@string/tv_address"
-                app:layout_constraintStart_toStartOf="@+id/tvAddress2"
-                app:layout_constraintTop_toBottomOf="@+id/spnrSelectedSystem" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginLeft="32dp" android:layout_marginStart="32dp"/>
 
         <TextView
                 android:id="@+id/tvLogin"
@@ -175,8 +160,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tv_login"
                 app:layout_constraintBottom_toBottomOf="@+id/etConnectLogin"
-                app:layout_constraintStart_toStartOf="@+id/tvAddress2"
-                app:layout_constraintTop_toTopOf="@+id/etConnectLogin" />
+                app:layout_constraintTop_toTopOf="@+id/etConnectLogin"
+                app:layout_constraintStart_toStartOf="@+id/tvAddress"/>
 
         <TextView
                 android:id="@+id/tvPassword"
@@ -184,8 +169,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tv_password"
                 app:layout_constraintBottom_toBottomOf="@+id/etConnectPassword"
-                app:layout_constraintStart_toStartOf="@+id/tvAddress2"
-                app:layout_constraintTop_toTopOf="@+id/etConnectPassword" />
+                app:layout_constraintTop_toTopOf="@+id/etConnectPassword"
+                app:layout_constraintStart_toStartOf="@+id/tvAddress"/>
         <TextView
                 android:text="@string/tv_port"
                 android:layout_width="wrap_content"
@@ -201,24 +186,9 @@
                 android:layout_marginTop="8dp"
                 android:gravity="top|left"
                 android:text="@string/cb_service_enabled_text"
-                app:layout_constraintEnd_toEndOf="@+id/spnrSelectedSystem"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/spnrSelectedSystem"
-                app:layout_constraintTop_toBottomOf="@+id/cbRemember" />
-
-        <Spinner
-                android:id="@+id/spnrSelectedSystem"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
-                android:layout_marginRight="24dp"
-                android:entries="@array/systems"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvAddress2" />
+                app:layout_constraintTop_toBottomOf="@+id/cbRemember"
+                app:layout_constraintStart_toStartOf="@+id/cbRemember"
+                app:layout_constraintEnd_toEndOf="@+id/cbRemember"/>
 
         <TextView
                 android:id="@+id/tvFCMTopic"
@@ -226,8 +196,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tv_fcm_topic"
                 app:layout_constraintBottom_toBottomOf="@+id/etFCMTopic"
-                app:layout_constraintStart_toStartOf="@+id/tvAddress2"
-                app:layout_constraintTop_toTopOf="@+id/etFCMTopic"/>
+                app:layout_constraintTop_toTopOf="@+id/etFCMTopic"
+                app:layout_constraintStart_toStartOf="@+id/tvAddress"/>
         <EditText
                 android:id="@+id/etFCMTopic"
                 android:layout_width="0dp"
@@ -236,7 +206,7 @@
                 android:ems="10"
                 android:hint="@string/tv_fcm_topic"
                 android:text=""
-                app:layout_constraintEnd_toEndOf="@+id/cbConnectByRest"
+                app:layout_constraintEnd_toEndOf="@+id/etConnectPassword"
                 app:layout_constraintTop_toBottomOf="@+id/cbConnectByRest"
                 tools:targetApi="o" app:layout_constraintStart_toStartOf="@+id/etConnectPassword"
                 android:visibility="visible" android:enabled="false"/>

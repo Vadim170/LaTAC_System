@@ -13,8 +13,8 @@
         <div class="list-group">
             <th:block th:each="group : ${groups}">
                 <a th:href="@{'params?silo=' + ${group.name}}" class="list-group-item"
-                   th:style="${group.state.value == 1} ?
-                                'background: #CEFFAD' : (${group.state.value == 0} ?
+                   th:style="${group.state.value == 0} ?
+                                'background: #CEFFAD' : (${group.state.value == 1} ?
                                     'background: #FF7A7A' : 'background: #9C9C9C')">
                     <h4 class="list-group-item-heading" th:text="${group.name}">List group item heading</h4>
                     <p class="list-group-item-text" th:text="${group.dir}">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>

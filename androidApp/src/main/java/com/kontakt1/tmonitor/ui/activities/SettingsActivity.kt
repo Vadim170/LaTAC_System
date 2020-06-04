@@ -33,15 +33,6 @@ class SettingsActivity : AppCompatActivity()  {
         }
         cbServiceEnabled.setOnCheckedChangeListener(::cbServiceEnabledOnChackedChange)
         cbDefaultDBName.setOnCheckedChangeListener(::cbDefaultDBNameOnChackedChange)
-        spnrSelectedSystem.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                setDefDBNameIfNeed()
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
-        }
         loadConnectSettings()
     }
 
@@ -80,7 +71,6 @@ class SettingsActivity : AppCompatActivity()  {
     private fun cbConnectByRestOnChackedChange(cb: CompoundButton, state: Boolean) {
         if (!state) {
             fcmUnsubscribe()
-            spnrSelectedSystem.isEnabled = true
             etConnectPassword.isEnabled = true
             etConnectLogin.isEnabled = true
             etConnectPort.isEnabled = true
@@ -90,7 +80,6 @@ class SettingsActivity : AppCompatActivity()  {
             cbServiceEnabled.isEnabled = true
         } else {
             fcmSubscribe()
-            spnrSelectedSystem.isEnabled = false
             etConnectPassword.isEnabled = false
             etConnectLogin.isEnabled = false
             etConnectPort.isEnabled = false
@@ -128,7 +117,7 @@ class SettingsActivity : AppCompatActivity()  {
     private fun setDefDBNameIfNeed() {
         if(cbDefaultDBName.isChecked) {
             val dafaultNames = resources.getStringArray(R.array.systems_default_db_names)
-            val selectedDefName = dafaultNames.elementAtOrElse(spnrSelectedSystem.selectedItemPosition) { return }
+            val selectedDefName = dafaultNames.elementAtOrElse(0) { return } 
             etDatabaseName.setText(selectedDefName)
         }
     }
@@ -141,7 +130,7 @@ class SettingsActivity : AppCompatActivity()  {
         if (settings != null) {
             val systemsNames = resources.getStringArray(R.array.systems)
             with(settings.settingsData) {
-                selectedSystem = systemsNames[spnrSelectedSystem.selectedItemPosition]
+                selectedSystem = systemsNames[0]
                 useRestServer = cbConnectByRest.isChecked
                 isServiceEnabled = cbServiceEnabled.isChecked
                 isAutofillOn = cbRemember.isChecked
@@ -167,7 +156,6 @@ class SettingsActivity : AppCompatActivity()  {
             val systemsNames = resources.getStringArray(R.array.systems)
             with(settings.settingsData) {
                 val indexOfSelectedSystem = systemsNames.indexOfFirst { it == selectedSystem }
-                spnrSelectedSystem.setSelection(indexOfSelectedSystem)
                 cbConnectByRest.isChecked = useRestServer
                 cbServiceEnabled.isChecked = isServiceEnabled
                 cbRemember.isChecked = isAutofillOn

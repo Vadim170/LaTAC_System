@@ -41,5 +41,5 @@
     <string name="msg_subscribe_failed">Ошибка при подписке на уведомления</string>
     <string name="msg_subscribed" translatable="false">Подписаны на уведомления %s</string>
     <string name="msg_unsubscribed" translatable="false">Отписаны от уведомлений %s</string>
-    <string name="tv_fcm_topic">Ключ уведомлений</string>
+    <string name="tv_fcm_topic">Ключ FCM</string>
 </resources>

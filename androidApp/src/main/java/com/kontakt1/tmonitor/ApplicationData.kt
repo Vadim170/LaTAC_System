@@ -10,7 +10,6 @@ import com.kontakt1.tmonitor.dataClasses.params.interfaces.Param
 import com.kontakt1.tmonitor.settings.SettingsController
 import com.kontakt1.tmonitor.systems.System
 import com.kontakt1.tmonitor.systems.askt01.Askt01
-import com.kontakt1.tmonitor.systems.askubuk01.AskuBUK01
 import kotlinx.coroutines.*
 import java.lang.ref.WeakReference
 import java.sql.Connection
@@ -269,7 +268,6 @@ object ApplicationData {
         val selectedSystem = settingsController!!.settingsData.selectedSystem
         system = when (selectedSystem) {
             context.resources.getStringArray(R.array.systems)[0] -> Askt01()
-            context.resources.getStringArray(R.array.systems)[1] -> AskuBUK01()
             else -> Askt01()
         }
     }

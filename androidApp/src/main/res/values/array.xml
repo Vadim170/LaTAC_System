@@ -6,12 +6,12 @@
     </string-array>
     <string-array name="systems">
         <item>АСКТ-01</item>
-        <item>АСКУ БУК-01</item>
+        <!--<item>АСКУ БУК-01</item>-->
         <!--<item>АСКУ ПАРК</item>-->
     </string-array>
     <string-array name="systems_default_db_names">
         <item>tmonitor</item>
-        <item>ASKU_BUK01</item>
+        <!--<item>ASKU_BUK01</item>-->
         <!--<item>ASKU_PARK</item>-->
     </string-array>
 </resources>
