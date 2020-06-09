@@ -2,6 +2,7 @@ package com.kontakt1.tmonitor.dataClasses.params.interfaces
 
 import com.kontakt1.tmonitor.dataClasses.indications.DiscreteIndication
 import com.kontakt1.tmonitor.dataClasses.indications.DiscreteIndication.DiscreteSensorState.*
+import com.kontakt1.tmonitor.dataClasses.params.interfaces.State.Companion.getByInt
 import java.sql.ResultSet
 import java.sql.SQLException
 import java.util.*
@@ -45,7 +46,7 @@ abstract class DiscreteParams(
 					//	calculateSavetimeCalendar(resultSetLastIndications.getTimestamp("savetime"))
 					return DiscreteIndication(
 							serverTime,
-							Companion.getByInt(resultSetLastIndications.getInt(nameColumnStateInDB))
+							DiscreteIndication.DiscreteSensorState.getByInt(resultSetLastIndications.getInt(nameColumnStateInDB))
 						)
 				}
 			}

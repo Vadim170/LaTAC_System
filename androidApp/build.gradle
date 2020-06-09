@@ -12,9 +12,9 @@ android {
         applicationId "com.kontakt1.tmonitor"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 5
+        versionCode 7
         multiDexEnabled true
-        versionName 'beta v0.2.0'
+        versionName 'beta v0.3.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

@@ -22,11 +22,11 @@ abstract class Param<T : Indication?>(
 
     fun isRelevantIndiacation(timeLastIndication : Calendar): Boolean {
         val timeInMillisInLastIndication = timeLastIndication.timeInMillis
-        val millisecInMinute = 60_000
-        val criticalActualTime = numberMinutesRelevant * millisecInMinute // Колличество миллисекунд в 30 минутах
+        val criticalActualTime = numberMinutesRelevant * MILLISEC_IN_MINUTE // Колличество миллисекунд в 30 минутах
         val nowTime = Calendar.getInstance()
         val nowTimeInMillis = nowTime.timeInMillis
-        return (nowTimeInMillis - timeInMillisInLastIndication <= criticalActualTime)
+        val result = nowTimeInMillis - timeInMillisInLastIndication <= criticalActualTime
+        return result
     }
 
     fun resetState() {
@@ -60,7 +60,9 @@ abstract class Param<T : Indication?>(
         return result
     }
 
-
+    companion object {
+        private const val MILLISEC_IN_MINUTE = 60_000
+    }
 }
 
 /**

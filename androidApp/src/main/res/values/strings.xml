@@ -2,7 +2,7 @@
     <string name="company">Компания: ООО \"КОНТАКТ-1\"</string>
     <string name="tvDeveloper">Разработчик: Макаров Вадим</string>
     <string name="app_name">АСКТ-01 Монитор оператора</string>
-    <string name="version">v 1.0.0</string>
+    <string name="version">v 0.3.0</string>
     <string name="copyright">© В. Г. Макаров, 2019–2020</string>
     
     <string name="btn_settings">Настройки</string>
@@ -41,5 +41,5 @@
     <string name="msg_subscribe_failed">Ошибка при подписке на уведомления</string>
     <string name="msg_subscribed" translatable="false">Подписаны на уведомления %s</string>
     <string name="msg_unsubscribed" translatable="false">Отписаны от уведомлений %s</string>
-    <string name="tv_fcm_topic">Ключ уведомлений</string>
+    <string name="tv_fcm_topic">Ключ FCM</string>
 </resources>

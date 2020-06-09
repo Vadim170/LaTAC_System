@@ -3,14 +3,12 @@ package com.kontakt1.tmonitor.asktweb
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.Message
 import com.kontakt1.tmonitor.systems.System
 import kotlinx.coroutines.runBlocking
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Controller
 import org.springframework.util.ResourceUtils
-import java.io.FileInputStream
 import javax.annotation.PostConstruct
 import javax.sql.DataSource
 
@@ -39,7 +37,8 @@ class ApplicationController {
     }
 
     private fun initFCM() {
-        val serviceAccount = ResourceUtils.getFile("classpath:data/kontak1-latac-firebase-adminsdk-ajri1-46c4a4482a.json").inputStream()
+        val classPathResource = ClassPathResource("data/kontak1-latac-firebase-adminsdk-ajri1-46c4a4482a.json")
+        val serviceAccount = classPathResource.inputStream
         val options: FirebaseOptions = FirebaseOptions.Builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setDatabaseUrl("https://kontak1-latac.firebaseio.com")
