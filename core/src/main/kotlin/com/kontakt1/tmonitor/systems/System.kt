@@ -24,6 +24,17 @@ import java.sql.Connection
 import java.sql.Timestamp
 import java.util.*
 
+class DiagramSeries(
+        val name: String,
+        val data: List<Float?>
+)
+
+class DiagramData (
+        val name: String,
+        val title: String,
+        val series: List<DiagramSeries>
+)
+
 class Series(
         val name: String,
         val data: List<List<Float>>
@@ -162,6 +173,31 @@ abstract class System {
         connection: Connection,
         selectedParam: TParam
     ): List<TIndication>
+
+    /**
+     * Чтение данных для гистаграммы температур через REST
+     */
+    suspend fun readLastTempIndications(
+            address: String?,
+            selectedParam: TParam
+    ): List<TIndication> {
+        try {
+            val str = URL("http://$address/api/v1/indicationsLast" +
+                    "?paramType=Temperature" +
+                    "&paramId=${selectedParam.id}").readText()
+            val diagramData = Gson().fromJson(str, DiagramData::class.java)
+            return try {
+                val tempArray = diagramData.series[0].data
+                val typedTempArray = tempArray.toTypedArray()
+                listOf(TIndication(Calendar.getInstance(), typedTempArray))
+            } catch (e: Exception) {
+                emptyList<TIndication>()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return emptyList()
+    }
 
     protected abstract suspend fun readSystemStruct(connection: Connection, numberAttempts: Int = 5): List<Silo>
 

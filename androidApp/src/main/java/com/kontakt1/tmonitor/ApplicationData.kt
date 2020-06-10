@@ -293,8 +293,13 @@ object ApplicationData {
         GlobalScope.launch {
             // Процедура требующая времени
             val result = async {
-                connection?.let { connection ->
-                    return@async system.readLastTempIndications(connection, selectedParam)
+                if(settingsController?.settingsData?.useRestServer == true) {
+                    val address = settingsController?.settingsData?.address
+                    return@async system.readLastTempIndications(address, selectedParam)
+                } else {
+                    connection?.let { connection ->
+                        return@async system.readLastTempIndications(connection, selectedParam)
+                    }
                 }
             }.await()
             // Обработка результата
