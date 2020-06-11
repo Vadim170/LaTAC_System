@@ -21,6 +21,7 @@ class SettingsController(
             settingsData.apply {
                 putString(SELECTED_SYSTEM, selectedSystem)
                 putBoolean(USE_REST_SERVER, useRestServer)
+                putBoolean(SUBSCRIBE_FCM, subscribeFCM)
                 putBoolean(IS_SERVICE_ENABLED, isServiceEnabled)
                 putBoolean(IS_AUTOFILL_ON, isAutofillOn)
                 putBoolean(IS_DISPLAY_TIME_BY_SERVER_TIME_ZONE, isDisplayTimeByServerTimeZone)
@@ -55,22 +56,23 @@ class SettingsController(
         val default = Settings()
         with(sharedPreferences) {
             return Settings(
-                selectedSystem = getString(SELECTED_SYSTEM, default.selectedSystem) ?: "",
-                useRestServer = getBoolean(USE_REST_SERVER,default.useRestServer),
-                isServiceEnabled = getBoolean(IS_SERVICE_ENABLED, default.isServiceEnabled),
-                isAutofillOn = getBoolean(IS_AUTOFILL_ON, default.isAutofillOn),
-                isEnabledDefaultDBName = getBoolean(
-                    IS_ENABLED_DEFAULT_DB_NAME, default.isEnabledDefaultDBName
-                ),
-                databaseName = getString(SAVED_DATABASE_NAME, default.databaseName) ?: "",
-                isDisplayTimeByServerTimeZone = getBoolean(
-                    IS_DISPLAY_TIME_BY_SERVER_TIME_ZONE, default.isDisplayTimeByServerTimeZone
-                ),
-                login = getString(SAVED_LOGIN, default.login) ?: "",
-                password = getString(SAVED_PASS, default.password) ?: "",
-                address = getString(SAVED_ADDRESS, default.address) ?: "",
-                port = getInt(SAVED_PORT, default.port),
-                fcmtopic = getString(FCM_TOPIC, default.fcmtopic) ?: ""
+                    selectedSystem = getString(SELECTED_SYSTEM, default.selectedSystem) ?: "",
+                    useRestServer = getBoolean(USE_REST_SERVER,default.useRestServer),
+                    subscribeFCM = getBoolean(SUBSCRIBE_FCM,default.subscribeFCM),
+                    isServiceEnabled = getBoolean(IS_SERVICE_ENABLED, default.isServiceEnabled),
+                    isAutofillOn = getBoolean(IS_AUTOFILL_ON, default.isAutofillOn),
+                    isEnabledDefaultDBName = getBoolean(
+                        IS_ENABLED_DEFAULT_DB_NAME, default.isEnabledDefaultDBName
+                    ),
+                    databaseName = getString(SAVED_DATABASE_NAME, default.databaseName) ?: "",
+                    isDisplayTimeByServerTimeZone = getBoolean(
+                        IS_DISPLAY_TIME_BY_SERVER_TIME_ZONE, default.isDisplayTimeByServerTimeZone
+                    ),
+                    login = getString(SAVED_LOGIN, default.login) ?: "",
+                    password = getString(SAVED_PASS, default.password) ?: "",
+                    address = getString(SAVED_ADDRESS, default.address) ?: "",
+                    port = getInt(SAVED_PORT, default.port),
+                    fcmtopic = getString(FCM_TOPIC, default.fcmtopic) ?: ""
             )
         }
     }
@@ -78,6 +80,7 @@ class SettingsController(
     companion object {
         private const val SELECTED_SYSTEM = "selectedSystem"
         private const val USE_REST_SERVER = "useRestServer"
+        private const val SUBSCRIBE_FCM = "subscribeFCM"
         private const val IS_SERVICE_ENABLED = "service"
         private const val IS_AUTOFILL_ON = "autofill"
         private const val IS_DISPLAY_TIME_BY_SERVER_TIME_ZONE = "isDisplayTimeByServerTimeZone"

@@ -109,11 +109,25 @@ abstract class System {
                 is LDDownParam -> "LevelDiscreteDown"
                 else -> return emptyList()
             }
-            val str = URL("http://$address/api/v1/indications" +
+            val url = "http://$address/api/v1/indications" +
                     "?paramType=$type" +
                     "&paramId=${selectedParam.id}" +
                     "&datetimefrom=${dateTimeFrom.myRestDateTimeFormat()}" +
-                    "&datetimeto=${dateTimeTo.myRestDateTimeFormat()}").readText()
+                    "&datetimeto=${dateTimeTo.myRestDateTimeFormat()}"
+            val str = synchronized(url) {
+                try {
+                    URL(url).readText()
+                } catch (e:Exception) {
+                    try {
+                        URL(url).readText()
+                    } catch (e:Exception) {
+                        e.printStackTrace()
+                        ""
+                    }
+                }
+            }
+
+
             val chartData = Gson().fromJson(str, ChartData::class.java)
             val res = when(selectedParam) {
                 is LParam -> {

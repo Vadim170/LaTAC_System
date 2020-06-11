@@ -46,16 +46,10 @@ fun HorizontalBarChart.adjustTempChart() {
 
 fun HorizontalBarChart.adjustDiscreteChart() {
     val selectedParam = ApplicationData.system.selectedParam
-    if(ApplicationData.system.selectedCompleteParam?.hasDiscreteParams == false ||
-            ApplicationData.system.selectedParam is TParam) {
-        this.visibility = View.GONE
-    } else {
-        this.visibility = View.VISIBLE
-        configDiscreteDiagramDesign(
+    configDiscreteDiagramDesign(
             this,
             selectedParam
         )
-    }
 }
 
 fun HorizontalBarChart.mySetDiscreteData(

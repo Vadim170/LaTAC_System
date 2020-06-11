@@ -9,6 +9,7 @@ data class Settings(
     // Задаю через setSharedPreferences в конструкторе MainActivity
     var selectedSystem: String = "АСКТ-01", // Выбранная система
     var useRestServer: Boolean = false,
+    var subscribeFCM: Boolean = false,
     var isServiceEnabled: Boolean = false, // По умолчанию сервис отключен
     var isAutofillOn: Boolean = false, // По умолчанию выключено, так как это небезопасно
     var isDisplayTimeByServerTimeZone: Boolean = false, // По умолчанию используем время на устройстве клиента

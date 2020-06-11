@@ -2,7 +2,7 @@
     <string name="company">Компания: ООО \"КОНТАКТ-1\"</string>
     <string name="tvDeveloper">Разработчик: Макаров Вадим</string>
     <string name="app_name">АСКТ-01 Монитор оператора</string>
-    <string name="version">v 0.3.0</string>
+    <string name="version">v 0.3.2</string>
     <string name="copyright">© В. Г. Макаров, 2019–2020</string>
     
     <string name="btn_settings">Настройки</string>
@@ -20,7 +20,7 @@
     <string name="tv_list_param_name">Название</string>
     <string name="tv_from">От</string>
     <string name="tv_to">до</string>
-    <string name="cb_autofill_text">Запомнить и повательный список интерваловдключаться автоматически при включении приложения (Небезопасно)</string>
+    <string name="sw_autofill_text">Запомнить и подключаться автоматически при включении приложения (Небезопасно)</string>
     <string name="cb_service_enabled_text">Обновлять данные в фоне и предупреждать о аварийных ситуациях</string>
     <string name="cb_time_by_server_time_zone">Отображать время по часовому поясу сервера</string>
     <string name="cbConnectByRest">Подключаться посредством веб сервера</string>
@@ -42,4 +42,5 @@
     <string name="msg_subscribed" translatable="false">Подписаны на уведомления %s</string>
     <string name="msg_unsubscribed" translatable="false">Отписаны от уведомлений %s</string>
     <string name="tv_fcm_topic">Ключ FCM</string>
+    <string name="cb_subscribe_FCM">Подписаться на уведомления</string>
 </resources>

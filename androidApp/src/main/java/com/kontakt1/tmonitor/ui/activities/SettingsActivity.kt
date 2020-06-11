@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.solver.GoalRow
 import com.google.firebase.messaging.FirebaseMessaging
 import com.kontakt1.tmonitor.ApplicationData
 import com.kontakt1.tmonitor.R
@@ -23,14 +24,15 @@ class SettingsActivity : AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         val settings = ApplicationData.settingsController?.settingsData
-        cbConnectByRest.setOnCheckedChangeListener(::cbConnectByRestOnChackedChange)
+        swConnectByRest.setOnCheckedChangeListener(::swConnectByRestOnChackedChange)
         // Назначение обработчиков нажатий по кнопкам
         if (settings != null) {
-            cbRemember.isChecked = settings.isAutofillOn
+            swRemember.isChecked = settings.isAutofillOn
             cbServiceEnabled.isChecked = settings.isServiceEnabled
-            cbConnectByRest.isChecked = settings.useRestServer
+            swConnectByRest.isChecked = settings.useRestServer
             etFCMTopic.isEnabled = !settings.useRestServer
         }
+        cbSubscribeFCM.setOnCheckedChangeListener(::cbSubscribeFCMOnChackedChange)
         cbServiceEnabled.setOnCheckedChangeListener(::cbServiceEnabledOnChackedChange)
         cbDefaultDBName.setOnCheckedChangeListener(::cbDefaultDBNameOnChackedChange)
         spnrSelectedSystem.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -77,27 +79,60 @@ class SettingsActivity : AppCompatActivity()  {
         setDefDBNameIfNeed()
     }
 
-    private fun cbConnectByRestOnChackedChange(cb: CompoundButton, state: Boolean) {
-        if (!state) {
-            fcmUnsubscribe()
-            spnrSelectedSystem.isEnabled = true
-            etConnectPassword.isEnabled = true
-            etConnectLogin.isEnabled = true
-            etConnectPort.isEnabled = true
-            etDatabaseName.isEnabled = true
-            etFCMTopic.isEnabled = true
-            cbDefaultDBName.isEnabled = true
-            cbServiceEnabled.isEnabled = true
+    private fun swConnectByRestOnChackedChange(cb: CompoundButton, state: Boolean) {
+        if (state) {
+            if (cbSubscribeFCM.isChecked)
+                fcmSubscribe()
+            spnrSelectedSystem.visibility = View.GONE
+            etConnectPassword.visibility = View.GONE
+            etConnectLogin.visibility = View.GONE
+            etConnectPort.visibility = View.GONE
+            etDatabaseName.visibility = View.GONE
+            cbDefaultDBName.visibility = View.GONE
+            cbDisplayTimeByServerTimeZone.visibility = View.GONE
+            tvSelectedSystem.visibility = View.GONE
+            tvPort.visibility = View.GONE
+            tvLogin.visibility = View.GONE
+            tvPassword.visibility = View.GONE
+            tvDatabaseName.visibility = View.GONE
+            tvConnectSeparator.visibility = View.GONE
+            cbServiceEnabled.visibility = View.GONE
+
+            etFCMTopic.visibility = View.VISIBLE
+            tvFCMTopic.visibility = View.VISIBLE
+            cbSubscribeFCM.visibility = View.VISIBLE
         } else {
+            if (cbSubscribeFCM.isChecked)
+                fcmUnsubscribe()
+            spnrSelectedSystem.visibility = View.VISIBLE
+            etConnectPassword.visibility = View.VISIBLE
+            etConnectLogin.visibility = View.VISIBLE
+            etConnectPort.visibility = View.VISIBLE
+            etDatabaseName.visibility = View.VISIBLE
+            etFCMTopic.visibility = View.VISIBLE
+            cbDefaultDBName.visibility = View.VISIBLE
+            cbDisplayTimeByServerTimeZone.visibility = View.VISIBLE
+            tvSelectedSystem.visibility = View.VISIBLE
+            tvPort.visibility = View.VISIBLE
+            tvLogin.visibility = View.VISIBLE
+            tvPassword.visibility = View.VISIBLE
+            tvDatabaseName.visibility = View.VISIBLE
+            tvConnectSeparator.visibility = View.VISIBLE
+            cbServiceEnabled.visibility = View.VISIBLE
+
+            etFCMTopic.visibility = View.GONE
+            tvFCMTopic.visibility = View.GONE
+            cbSubscribeFCM.visibility = View.GONE
+        }
+    }
+
+    private fun cbSubscribeFCMOnChackedChange(cb: CompoundButton, state: Boolean) {
+        if (state) {
             fcmSubscribe()
-            spnrSelectedSystem.isEnabled = false
-            etConnectPassword.isEnabled = false
-            etConnectLogin.isEnabled = false
-            etConnectPort.isEnabled = false
-            etDatabaseName.isEnabled = false
             etFCMTopic.isEnabled = false
-            cbDefaultDBName.isEnabled = false
-            cbServiceEnabled.isEnabled = false
+        } else {
+            fcmUnsubscribe()
+            etFCMTopic.isEnabled = true
         }
     }
 
@@ -142,9 +177,10 @@ class SettingsActivity : AppCompatActivity()  {
             val systemsNames = resources.getStringArray(R.array.systems)
             with(settings.settingsData) {
                 selectedSystem = systemsNames[spnrSelectedSystem.selectedItemPosition]
-                useRestServer = cbConnectByRest.isChecked
+                useRestServer = swConnectByRest.isChecked
+                subscribeFCM = cbSubscribeFCM.isChecked
                 isServiceEnabled = cbServiceEnabled.isChecked
-                isAutofillOn = cbRemember.isChecked
+                isAutofillOn = swRemember.isChecked
                 isDisplayTimeByServerTimeZone = cbDisplayTimeByServerTimeZone.isChecked
                 isEnabledDefaultDBName = cbDefaultDBName.isChecked
                 //ApplicationData.settings.databaseName =
@@ -168,9 +204,10 @@ class SettingsActivity : AppCompatActivity()  {
             with(settings.settingsData) {
                 val indexOfSelectedSystem = systemsNames.indexOfFirst { it == selectedSystem }
                 spnrSelectedSystem.setSelection(indexOfSelectedSystem)
-                cbConnectByRest.isChecked = useRestServer
+                swConnectByRest.isChecked = useRestServer
+                cbSubscribeFCM.isChecked = subscribeFCM
                 cbServiceEnabled.isChecked = isServiceEnabled
-                cbRemember.isChecked = isAutofillOn
+                swRemember.isChecked = isAutofillOn
                 cbDisplayTimeByServerTimeZone.isChecked = isDisplayTimeByServerTimeZone
                 cbDefaultDBName.isChecked = isEnabledDefaultDBName
                 etConnectLogin.setText(login)

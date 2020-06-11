@@ -97,6 +97,7 @@ class ChartFragment : Fragment() {
             tvParamName?.text = "Параметр ${system.selectedParam?.alias}"
             val isTempSelected = position == 0
             btnToDiagram.visibility = if (isTempSelected) View.VISIBLE else View.GONE
+            chartDiscreteLevel.visibility = if(selectedCompleteParam?.hasDiscreteParams == true) View.VISIBLE else View.GONE
             chartDiscreteLevel?.adjustDiscreteChart()
             chart?.adjustChart()
             onRefresh()
@@ -171,16 +172,14 @@ class ChartFragment : Fragment() {
     private fun onRefresh() {
         lastDateTimeUpdate = Calendar.getInstance().timeInMillis
         val param = system.selectedParam
+        system.selectedCompleteParam?.ldUpParam?.let { ldUpParam ->
+            ApplicationData.readIndications(context, readDiscreteIndicationsChartListenerUI, dateTimeFrom, dateTimeTo, ldUpParam)
+        }
+        system.selectedCompleteParam?.ldDownParam?.let { ldDownParam ->
+            ApplicationData.readIndications(context, readDiscreteIndicationsChartListenerUI, dateTimeFrom, dateTimeTo, ldDownParam)
+        }
         when(param) {
-            is LParam -> {
-                ApplicationData.readIndications(context, readIndicationsChartListenerUI, dateTimeFrom, dateTimeTo, param)
-                system.selectedCompleteParam?.ldUpParam?.let { ldUpParam ->
-                    ApplicationData.readIndications(context, readDiscreteIndicationsChartListenerUI, dateTimeFrom, dateTimeTo, ldUpParam)
-                }
-                system.selectedCompleteParam?.ldDownParam?.let { ldDownParam ->
-                    ApplicationData.readIndications(context, readDiscreteIndicationsChartListenerUI, dateTimeFrom, dateTimeTo, ldDownParam)
-                }
-            }
+            is LParam -> ApplicationData.readIndications(context, readIndicationsChartListenerUI, dateTimeFrom, dateTimeTo, param)
             is TParam -> ApplicationData.readIndications(context, readIndicationsChartListenerUI, dateTimeFrom, dateTimeTo, param)
         }
         val isDisplayByServerTimezone =
