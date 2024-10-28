@@ -32,3 +32,7 @@ Project for systems of control temperature ald levels data
 
 * Connection to RestAPI or DB directly
 * Push Notifications
+
+# Screenshots of UI web and android app
+
+![alt text](https://github.com/Vadim170/LaTAC_System/blob/master/image.jpg?raw=true)
