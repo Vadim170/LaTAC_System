@@ -1,4 +1,3 @@
-
 group 'com.kontakt1'
 version '1.0'
 
@@ -7,7 +6,8 @@ repositories {
 }
 
 android {
-    compileSdkVersion 29
+    namespace 'com.kontakt1.tmonitor'
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.kontakt1.tmonitor"
         minSdkVersion 16
@@ -24,8 +24,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_18
+        targetCompatibility JavaVersion.VERSION_18
     }
     productFlavors {
     }
