@@ -35,4 +35,4 @@ Project for systems of control temperature ald levels data
 
 # Screenshots of UI web and android app
 
-![alt text](https://github.com/Vadim170/LaTAC_System/blob/master/image.jpg?raw=true)
+![Screenshots](https://github.com/Vadim170/LaTAC_System/blob/master/screenshots.png?raw=true)
